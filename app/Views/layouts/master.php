@@ -21,13 +21,14 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
     <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
     <meta name="author" content="PIXINVENT">
-    <title>Dashboard sales - Modern Admin - Clean Bootstrap 4 Dashboard HTML Template + Bitcoin Dashboard</title>
+    <title>Dashboard Library SMAN 12 Makassar</title>
     <link rel="apple-touch-icon" href="/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/datatables.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -44,6 +45,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/morris.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/style.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/palette-gradient.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -381,6 +383,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!-- BEGIN: Vendor JS-->
     <script src="<?= base_url() ?>js/vendors.min.js"></script>
+    <script src="<?= base_url() ?>js/datatables.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
@@ -400,7 +403,11 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
+    <script src="<?= base_url() ?>js/datatables-basic.min.js"></script>
     <script src="<?= base_url() ?>js/dashboard-sales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <?= $this->renderSection('javascript') ?>
     <!-- END: Page JS-->
 
 </body>
