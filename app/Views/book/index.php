@@ -33,7 +33,13 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Data Buku</h4>
-                                <button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>
+                                <?php
+                                
+                                if (session()->get('role') == 2) {
+                                    echo '<button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>';
+                                }
+                                
+                                ?>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -60,7 +66,13 @@
                                                     <th>Jenis Buku</th>
                                                     <th>Kode Klasifikasi</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
+                                                    <?php
+                                                    
+                                                    if (session()->get('role') == 2) {
+                                                        echo '<th>Action</th>';
+                                                    }
+
+                                                    ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -91,10 +103,16 @@
                                                                 <span class="badge badge-danger">Tidak Tersedia</span>
                                                             <?php } ?>
                                                         </td>
-                                                        <td style="text-align: center;vertical-align: middle;">
-                                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id-buku="<?= $value->id_buku ?>" data-judul-buku="<?= $value->judul_buku ?>" data-kode-buku="<?= $value->kode_buku ?>" data-pengarang="<?= $value->pengarang ?>" data-penerbit="<?= $value->penerbit ?>" data-tahun-terbit="<?= $value->tahun_terbit ?>" data-jumlah-buku="<?= $value->jumlah_buku ?>" data-jenis-buku="<?= $value->jenis_buku ?>" data-kode-klasifikasi="<?= $value->kode_klasifikasi ?>" data-status-buku="<?= $value->status_buku ?>" data-gambar="<?= $value->gambar ?>"r>Edit</a>
-                                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-id="<?= $value->id_buku ?>" data-gambar="<?= $value->gambar ?>">Delete</a>
-                                                        </td>
+                                                        <?php
+                                                        
+                                                        if (session()->get('role') == 2) {
+                                                            echo '<td style="text-align: center;vertical-align: middle;">';
+                                                            echo '<a href="#" class="btn btn-warning btn-sm btn-edit" data-id-buku="' . $value->id_buku . '" data-judul-buku="' . $value->judul_buku . '" data-kode-buku="' . $value->kode_buku . '" data-pengarang="' . $value->pengarang . '" data-penerbit="' . $value->penerbit . '" data-tahun-terbit="' . $value->tahun_terbit . '" data-jumlah-buku="' . $value->jumlah_buku . '" data-jenis-buku="' . $value->jenis_buku . '" data-kode-klasifikasi="' . $value->kode_klasifikasi . '" data-status-buku="' . $value->status_buku . '" data-gambar="' . $value->gambar . '">Edit</a>';
+                                                            echo '<a href="#" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-id="' . $value->id_buku . '" data-target="#deleteModal">Delete</a>';
+                                                            echo '</td>';
+                                                        }
+                                                        
+                                                        ?>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -110,7 +128,13 @@
                                                     <th>Jenis Buku</th>
                                                     <th>Kode Klasifikasi</th>
                                                     <th>Status</th>
-                                                    <th>Action</th>
+                                                    <?php
+                                                    
+                                                    if (session()->get('role') == 2) {
+                                                        echo '<th>Action</th>';
+                                                    }
+                                                    
+                                                    ?>
                                                 </tr>
                                             </tfoot>
                                         </table>

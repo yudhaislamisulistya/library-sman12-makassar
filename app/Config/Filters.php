@@ -2,6 +2,10 @@
 
 namespace Config;
 
+use App\Filters\Admin;
+use App\Filters\Headmaster;
+use App\Filters\NoAuth;
+use App\Filters\Student;
 use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
@@ -21,6 +25,10 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'student' => Student::class,
+        'admin' => Admin::class,
+        'headmaster' => Headmaster::class,
+        'noauth' => NoAuth::class,
     ];
 
     /**

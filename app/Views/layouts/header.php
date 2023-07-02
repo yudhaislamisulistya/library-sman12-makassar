@@ -15,28 +15,12 @@
                 <div class="collapse navbar-collapse" id="navbar-mobile">
                     <ul class="nav navbar-nav mr-auto float-left">
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
-                        <li class="dropdown nav-item mega-dropdown d-none d-lg-block"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">Mega</a>
-                            <ul class="mega-dropdown-menu dropdown-menu row p-1">
-                                <li class="col-md-4 bg-mega p-2">
-                                    <h3 class="text-white mb-1 font-weight-bold">Mega Menu Sidebar</h3>
-                                    <p class="text-white line-height-2">Candy canes bonbon toffee. Cheesecake dragée gummi bears chupa chups powder bonbon. Apple pie cookie sweet.</p>
-                                    <button class="btn btn-outline-white">Learn More</button>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                            <div class="search-input">
-                                <input class="input" type="text" placeholder="Explore Modern..." tabindex="0" data-search="template-list">
-                                <div class="search-input-close"><i class="ft-x"></i></div>
-                                <ul class="search-list"></ul>
-                            </div>
-                        </li>
                     </ul>
                     <ul class="nav navbar-nav float-right">
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700"><?= getNameUserById(session()->get('id_user'))?></span><span class="avatar avatar-online"><img src="<?= base_url() ?>/images/avatar-s-19.png" alt="avatar"><i></i></span></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="user-profile.html"><i class="ft-user"></i> Edit Profile</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="login-with-bg-image.html"><i class="ft-power"></i> Logout</a>
+                                <a class="dropdown-item" href="#"><i class="ft-user"></i> Edit Profile</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="<?= route_to('auth.logout') ?>"><i class="ft-power"></i> Logout</a>
                             </div>
                         </li>
                     </ul>

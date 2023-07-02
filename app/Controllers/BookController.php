@@ -17,7 +17,7 @@ class BookController extends BaseController
     public function index()
     {
         $data = $this->bookModel->get()->getResult();
-        return view('admin/book/index', compact('data'));
+        return view('book/index', compact('data'));
     }
 
     // make function to add method post

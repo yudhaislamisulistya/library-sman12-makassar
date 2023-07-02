@@ -5,10 +5,9 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\LoanModel;
 
-class AdminController extends BaseController
+class StudentController extends BaseController
 {
     protected $loanModel;
-
 
     public function __construct()
     {
@@ -17,7 +16,7 @@ class AdminController extends BaseController
 
     public function index()
     {
-        $data_returns = $this->loanModel->getReturn();
-        return view('admin/index', compact('data_returns'));
+        $data_returns = $this->loanModel->getReturn(session()->get('id_user'));
+        return view('student/index', compact('data_returns'));
     }
 }

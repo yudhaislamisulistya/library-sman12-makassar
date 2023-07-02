@@ -15,8 +15,15 @@ class ReturnController extends BaseController
     }
     public function index()
     {
-        $data_returns = $this->loanModel->getReturn();
-        return view('admin/return/index', compact('data_returns'));
+        // check if role is admin
+        if (session()->get('role') == 1) {
+            $data_returns = $this->loanModel->getReturn(session()->get('id_user'));
+        } elseif (session()->get('role') == 2) {
+            $data_returns = $this->loanModel->getReturn();
+        } elseif (session()->get('role') == 3) {
+            $data_returns = $this->loanModel->getReturn();
+        }
+        return view('return/index', compact('data_returns'));
     }
 
     public function delete()

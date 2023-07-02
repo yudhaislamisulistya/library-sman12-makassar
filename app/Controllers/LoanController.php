@@ -26,7 +26,16 @@ class LoanController extends BaseController
         $data_books = $this->bookModel->get()->getResult();
         $data_loans = $this->loanModel->getLoan();
 
-        return view('admin/loan/index', compact('data_students', 'data_books', 'data_loans'));
+        // check role
+        if (session()->get('role') == 1) {
+            $data_loans = $this->loanModel->getLoan(session()->get('id_user'));
+        }elseif (session()->get('role') == 2) {
+            $data_loans = $this->loanModel->getLoan();
+        }elseif (session()->get('role') == 3) {
+            $data_loans = $this->loanModel->getLoan();
+        }
+
+        return view('loan/index', compact('data_students', 'data_books', 'data_loans'));
     }
 
     public function add()

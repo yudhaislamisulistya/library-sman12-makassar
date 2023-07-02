@@ -56,7 +56,13 @@
                                                     <th>Tanggal Harus Kembali</th>
                                                     <th>Tanggal Kembali</th>
                                                     <th>Denda</th>
-                                                    <th>Action</th>
+                                                    <?php
+
+                                                    if (session()->get('role') == 2) {
+                                                        echo '<th>Action</th>';
+                                                    }
+
+                                                    ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -94,19 +100,15 @@
                                                             echo $denda;
                                                             ?>
                                                         </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-warning btn-sm btn-edit"
-                                                                data-id="<?= $data_return->id_pinjam ?>"
-                                                                data-nomor-anggota="<?= $data_return->nomor_anggota ?>"
-                                                                data-nama-siswa="<?= $data_return->nama_siswa ?>"
-                                                                data-judul-buku="<?= $data_return->judul_buku ?>"
-                                                                data-tanggal-pinjam="<?= $data_return->tanggal_pinjam ?>"
-                                                                data-tanggal-harus-kembali="<?= $data_return->tanggal_harus_kembali ?>"
-                                                                data-tanggal-kembali="<?= $data_return->tanggal_kembali ?>"
-                                                                data-denda="<?= $denda ?>"
-                                                            ><i class="ft-edit"></i></a>
-                                                            <button class="btn btn-danger btn-sm btn-delete" data-id="<?= $data_return->id_pinjam ?>" data-toggle="modal" data-target="#deleteModal"><i class="ft-trash"></i></button>
-                                                        </td>
+                                                        <?php
+
+                                                        if (session()->get('role') == 2) {
+                                                            echo '<td>
+                                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="' . $data_return->id_pinjam . '" data-nomor-anggota="' . $data_return->nomor_anggota . '" data-nama-siswa="' . $data_return->nama_siswa . '" data-judul-buku="' . $data_return->judul_buku . '" data-tanggal-pinjam="' . $data_return->tanggal_pinjam . '" data-tanggal-harus-kembali="' . $data_return->tanggal_harus_kembali . '" data-tanggal-kembali="' . $data_return->tanggal_kembali . '" data-denda="' . $denda . '"><i class="ft-edit"></i></a>
+                                                            <button class="btn btn-danger btn-sm btn-delete" data-id="' . $data_return->id_pinjam . '" data-toggle="modal" data-target="#deleteModal"><i class="ft-trash"></i></button>
+                                                        </td>';
+                                                        }
+                                                        ?>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -119,7 +121,13 @@
                                                     <th>Tanggal Harus Kembali</th>
                                                     <th>Tanggal Kembali</th>
                                                     <th>Denda</th>
-                                                    <th>Action</th>
+                                                    <?php
+
+                                                    if (session()->get('role') == 2) {
+                                                        echo '<th>Action</th>';
+                                                    }
+
+                                                    ?>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -171,7 +179,7 @@
                     </div>
                     <div class="form-group">
                         <label>Tanggal Kembali</label>
-                        <input type="date" class="form-control tanggal_kembali" name="tanggal_kembali" placeholder="Tanggal Kembali" required >
+                        <input type="date" class="form-control tanggal_kembali" name="tanggal_kembali" placeholder="Tanggal Kembali" required>
                     </div>
                     <div class="form-group">
                         <label>Denda</label>

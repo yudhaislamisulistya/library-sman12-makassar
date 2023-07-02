@@ -32,13 +32,8 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 // make groub admin
-$routes->group('admin', function ($routes) {
+$routes->group('admin', ['filter' => 'admin:dual,noreturn'], function ($routes) {
     $routes->get('dashboard', 'AdminController::index', ['as' => 'admin.dashboard']);
-    $routes->get('login', 'AdminController::login');
-    $routes->get('logout', 'AdminController::logout');
-    $routes->get('dashboard', 'AdminController::dashboard');
-    $routes->get('profile', 'AdminController::profile');
-    $routes->get('setting', 'AdminController::setting');
 
     // add groub member
     $routes->group('member', function ($routes) {
@@ -69,25 +64,50 @@ $routes->group('admin', function ($routes) {
         $routes->post('update', 'ReturnController::update', ['as' => 'return.update']);
         $routes->post('delete', 'ReturnController::delete', ['as' => 'return.delete']);
     });
-    
 
+    // add group report
+    $routes->group('report', function ($routes) {
+        $routes->get('/', 'ReportController::index', ['as' => 'report']);
+        $routes->post('/', 'ReportController::index', ['as' => 'postReport']);
+    });
+});
+
+// make group student
+$routes->group('student', ['filter' => 'student:dual,noreturn'], function ($routes) {
+    $routes->get('dashboard', 'StudentController::index', ['as' => 'student.dashboard']);
+
+    // add group book
+    $routes->group('book', function ($routes) {
+        $routes->get('/', 'BookController::index', ['as' => 'student.book']);
+    });
+
+    // add group loan
+    $routes->group('loan', function ($routes) {
+        $routes->get('/', 'LoanController::index', ['as' => 'student.loan']);
+    });
+
+    // add group return
+    $routes->group('return', function ($routes) {
+        $routes->get('/', 'ReturnController::index', ['as' => 'student.return']);
+    });
+});
+
+// make group headmaster with filter auth
+$routes->group('headmaster', ['filter' => 'headmaster:dual,noreturn'], function ($routes) {
+    $routes->get('dashboard', 'HeadmasterController::index', ['as' => 'headmaster.dashboard']);
+    // make group loan
+    $routes->group('loan', function ($routes) {
+        $routes->get('/', 'LoanController::index', ['as' => 'headmaster.loan']);
+    });
+    
 });
 
 $routes->group('auth', function ($routes) {
-    $routes->get('login', 'AuthController::login', ['as' => 'auth.login']);
-    $routes->post('login', 'AuthController::postLogin', ['as' => 'auth.postLogin']);
-    $routes->get('logout', 'AuthController::logout');
-    $routes->get('register', 'AuthController::register');
-    $routes->get('forgot', 'AuthController::forgot');
-    $routes->get('reset', 'AuthController::reset');
-    $routes->get('activate-account', 'AuthController::activateAccount');
-    $routes->get('resend-activate-account', 'AuthController::resendActivateAccount');
-    $routes->get('deactivate-account', 'AuthController::deactivateAccount');
-    $routes->get('change-password', 'AuthController::changePassword');
-    $routes->get('change-email', 'AuthController::changeEmail');
-    $routes->get('profile', 'AuthController::profile');
-    $routes->get('setting', 'AuthController::setting');
-    $routes->get('reset-session', 'AuthController::resetSession');
+    $routes->get('login', 'AuthController::login', ['as' => 'auth.login', 'filter' => 'noauth']);
+    $routes->post('login', 'AuthController::postLogin', ['as' => 'auth.postLogin', 'filter' => 'noauth']);
+    $routes->get('logout', 'AuthController::logout', ['as' => 'auth.logout']);
+    $routes->post('change-password', 'AuthController::changePassword', ['as' => 'auth.changePassword']);
+    $routes->get('profile', 'AuthController::profile', ['as' => 'auth.profile']);
 });
 
 // API Routes

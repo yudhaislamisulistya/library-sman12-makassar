@@ -50,4 +50,13 @@ class BookModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getBookByDate($tahun)
+    {
+        $builder = $this->db->table('books');
+        $builder->select('books.id_buku, books.kode_buku, books.judul_buku, books.pengarang, books.penerbit, books.tahun_terbit, books.jumlah_buku, books.jenis_buku, books.kode_klasifikasi, books.status_buku, books.gambar');
+        $builder->where('YEAR(books.created_at)', $tahun);
+        $query = $builder->get();
+        return $query->getResult();
+    }
 }

@@ -15,7 +15,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        Selamat Datang! <strong><?= getNameUserById(session()->get('id_user')) ?> </strong> Anda Login Sebagai Admin
+                        Selamat Datang! <strong><?= getNameUserById(session()->get('id_user')) ?> </strong> Anda Login Sebagai Siswa
                     </div>
                 </div>
                 <div class="col-xl-12 col-12">
@@ -44,7 +44,7 @@
                                         <div class="media d-flex">
                                             <div class="media-body text-left">
                                                 <h6 class="text-muted">Peminjaman</h6>
-                                                <h3><?= count(getLoans()) ?></h3>
+                                                <h3><?= count(getLoans(session()->get('id_user'))) ?></h3>
                                             </div>
                                             <div class="align-self-center">
                                                 <i class="icon-trophy success font-large-2 float-right"></i>
@@ -61,7 +61,7 @@
                                         <div class="media d-flex">
                                             <div class="media-body text-left">
                                                 <h6 class="text-muted">Pengembalian</h6>
-                                                <h3><?= count(getReturns()) ?></h3>
+                                                <h3><?= count(getReturns(session()->get('id_user'))) ?></h3>
                                             </div>
                                             <div class="align-self-center">
                                                 <i class="icon-call-in danger font-large-2 float-right"></i>
@@ -73,8 +73,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="recent-sales" class="col-12 col-md-12">
-                        <div class="card">
+                        <div class="col-12 col-md-12">
+                            <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Data Pengembalian</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>

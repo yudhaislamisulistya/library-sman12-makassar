@@ -55,6 +55,11 @@ class AuthController extends BaseController
         }
     }
 
+    public function logout(){
+        $this->resetSession();
+        return redirect()->to(base_url('auth/login'));
+    }
+
     public function setSession($data)
     {
         $session = [

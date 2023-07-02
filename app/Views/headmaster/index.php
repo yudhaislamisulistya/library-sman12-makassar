@@ -15,7 +15,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        Selamat Datang! <strong><?= getNameUserById(session()->get('id_user')) ?> </strong> Anda Login Sebagai Admin
+                        Selamat Datang! <strong><?= getNameUserById(session()->get('id_user')) ?> </strong> Anda Login Sebagai Kepala Sekolah
                     </div>
                 </div>
                 <div class="col-xl-12 col-12">
@@ -73,8 +73,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="recent-sales" class="col-12 col-md-12">
-                        <div class="card">
+                        <div class="col-12 col-md-12">
+                            <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title">Data Pengembalian</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>

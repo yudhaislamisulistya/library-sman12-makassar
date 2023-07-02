@@ -30,78 +30,91 @@
                                 <i class="zmdi zmdi-info-outline"></i>Proses Gagal!!!
                             </div>
                         <?php } ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Peminjaman Buku</h4>
-                                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                        <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                    </ul>
+                        <?php
+
+                        if (session()->get('role') == 2) { ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Peminjaman Buku</h4>
+                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-content collapse show">
+                                    <div class="card-body card-dashboard">
+                                        <form method="POST" action="<?= route_to('loan.add') ?>">
+                                            <input type="hidden" class="form-control" name="id_staff" id="id_staff" value="<?= session()->get('id_user') ?>" readonly required>
+                                            <div class="form-group">
+                                                <label>Nomor Anggota</label>
+                                                <select class="js-data-students form-control" name="id_siswa" id="id_siswa" required>
+                                                    <option value="">-- Pilih Nomor Anggota --</option>
+                                                    <?php foreach ($data_students as $key => $value) : ?>
+                                                        <option value="<?= $value->id_siswa ?>"><?= $value->nomor_anggota ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nama Siswa</label>
+                                                <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" readonly required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tanggal Pinjam</label>
+                                                <input type="date" class="form-control" name="tanggal_pinjam" id="tanggal_pinjam" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Tanggal Pengembalian</label>
+                                                <input type="date" class="form-control" name="tanggal_harus_kembali" id="tanggal_harus_kembali" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Kode Buku</label>
+                                                <select class="js-data-books form-control" name="id_buku" id="id_buku" required>
+                                                    <option value="">-- Pilih Kode Buku --</option>
+                                                    <?php foreach ($data_books as $key => $value) : ?>
+                                                        <option value="<?= $value->id_buku ?>"><?= $value->kode_buku ?> | <?= $value->judul_buku ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Judul Buku</label>
+                                                <input type="text" class="form-control" name="judul_buku" id="judul_buku" readonly required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Penerbit</label>
+                                                <input type="text" class="form-control" name="penerbit" id="penerbit" readonly required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Pengarang</label>
+                                                <input type="text" class="form-control" name="pengarang" id="pengarang" readonly required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Jenis Buku</label>
+                                                <input type="text" class="form-control" name="jenis_buku" id="jenis_buku" readonly required>
+                                            </div>
+                                            <button type="submit" class="btn btn-success">Simpan</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-content collapse show">
-                                <div class="card-body card-dashboard">
-                                    <form method="POST" action="<?= route_to('loan.add') ?>">
-                                        <input type="hidden" class="form-control" name="id_staff" id="id_staff" value="<?= session()->get('id_user') ?>" readonly required>
-                                        <div class="form-group">
-                                            <label>Nomor Anggota</label>
-                                            <select class="js-data-students form-control" name="id_siswa" id="id_siswa" required>
-                                                <option value="">-- Pilih Nomor Anggota --</option>
-                                                <?php foreach ($data_students as $key => $value) : ?>
-                                                    <option value="<?= $value->id_siswa ?>"><?= $value->nomor_anggota ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nama Siswa</label>
-                                            <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" readonly required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tanggal Pinjam</label>
-                                            <input type="date" class="form-control" name="tanggal_pinjam" id="tanggal_pinjam" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Tanggal Pengembalian</label>
-                                            <input type="date" class="form-control" name="tanggal_harus_kembali" id="tanggal_harus_kembali" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Kode Buku</label>
-                                            <select class="js-data-books form-control" name="id_buku" id="id_buku" required>
-                                                <option value="">-- Pilih Kode Buku --</option>
-                                                <?php foreach ($data_books as $key => $value) : ?>
-                                                    <option value="<?= $value->id_buku ?>"><?= $value->kode_buku ?> | <?= $value->judul_buku ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Judul Buku</label>
-                                            <input type="text" class="form-control" name="judul_buku" id="judul_buku" readonly required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Penerbit</label>
-                                            <input type="text" class="form-control" name="penerbit" id="penerbit" readonly required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Pengarang</label>
-                                            <input type="text" class="form-control" name="pengarang" id="pengarang" readonly required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Jenis Buku</label>
-                                            <input type="text" class="form-control" name="jenis_buku" id="jenis_buku" readonly required>
-                                        </div>
-                                        <button type="submit" class="btn btn-success">Simpan</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <?php }
+
+                        ?>
+
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Data Peminjaman</h4>
-                                <button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>
+                                <?php
+
+                                if (session()->get('role') == 2) {
+                                    echo '<button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>';
+                                }
+
+                                ?>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -125,7 +138,13 @@
                                                     <th>Tanggal Pinjam</th>
                                                     <th>Tanggal Harus Kembali</th>
                                                     <th>Status Pinjaman</th>
-                                                    <th>Action</th>
+                                                    <?php
+
+                                                    if (session()->get('role') == 2) {
+                                                        echo '<th>Action</th>';
+                                                    }
+
+                                                    ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -133,11 +152,11 @@
                                                     <tr>
                                                         <td>
                                                             <?php
-                                                            
+
                                                             if ($value->gambar == null) {
                                                                 $value->gambar = 'default.jpg';
                                                             }
-                                                            
+
                                                             ?>
                                                             <img src="<?= base_url('images/books/' . $value->gambar) ?>" width="100px" height="100px">
                                                         </td>
@@ -153,9 +172,16 @@
                                                                 <span class="badge badge-success">Sudah Dikembalikan</span>
                                                             <?php endif; ?>
                                                         </td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $value->id_pinjam ?>">Delete</a>
-                                                        </td>
+                                                        <?php
+
+                                                        if (session()->get('role') == 2) {
+                                                            echo '<td>
+                                                                    <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="' . $value->id_pinjam . '">Delete</a>
+                                                                </td>';
+                                                        }
+
+                                                        ?>
+
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -168,7 +194,13 @@
                                                     <th>Tanggal Pinjam</th>
                                                     <th>Tanggal Harus Kembali</th>
                                                     <th>Status Pinjaman</th>
-                                                    <th>Action</th>
+                                                    <?php
+                                                    
+                                                    if (session()->get('role') == 2) {
+                                                        echo '<th>Action</th>';
+                                                    }
+                                                    
+                                                    ?>
                                                 </tr>
                                             </tfoot>
                                         </table>

@@ -6,7 +6,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class Auth implements FilterInterface
+class Headmaster implements FilterInterface
 {
     /**
      * Do whatever processing this filter needs to do.
@@ -26,7 +26,7 @@ class Auth implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if(!session()->get('isLoggedIn')){
-            return redirect()->to(base_url('login'));
+            return redirect()->to(base_url('auth/login'));
         }
     }
 
@@ -44,6 +44,11 @@ class Auth implements FilterInterface
      */
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        //
+        // check user role
+        if(session()->get('role') == 1){
+            return redirect()->to(base_url('student/dashboard'));
+        }elseif(session()->get('role') == 2){
+            return redirect()->to(base_url('admin/dashboard'));
+        }
     }
 }
