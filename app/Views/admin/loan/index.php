@@ -45,7 +45,8 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body card-dashboard">
-                                    <form>
+                                    <form method="POST" action="<?= route_to('loan.add') ?>">
+                                        <input type="hidden" class="form-control" name="id_staff" id="id_staff" value="<?= session()->get('id_user') ?>" readonly required>
                                         <div class="form-group">
                                             <label>Nomor Anggota</label>
                                             <select class="js-data-students form-control" name="id_siswa" id="id_siswa" required>
@@ -65,7 +66,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal Pengembalian</label>
-                                            <input type="date" class="form-control" name="tanggal_pengembalian" id="tanggal_pengembalian" required>
+                                            <input type="date" class="form-control" name="tanggal_harus_kembali" id="tanggal_harus_kembali" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Kode Buku</label>
@@ -99,7 +100,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Buku</h4>
+                                <h4 class="card-title">Data Peminjaman</h4>
                                 <button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -119,32 +120,54 @@
                                                 <tr>
                                                     <th>Gambar</th>
                                                     <th>Judul Buku</th>
-                                                    <th>Kode Buku</th>
-                                                    <th>Pengarang</th>
-                                                    <th>Penerbit</th>
-                                                    <th>Tahun Terbit</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Jenis Buku</th>
-                                                    <th>Kode Klasifikasi</th>
-                                                    <th>Status</th>
+                                                    <th>Staff</th>
+                                                    <th>Siswa</th>
+                                                    <th>Tanggal Pinjam</th>
+                                                    <th>Tanggal Harus Kembali</th>
+                                                    <th>Status Pinjaman</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                <?php foreach ($data_loans as $key => $value) : ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?php
+                                                            
+                                                            if ($value->gambar == null) {
+                                                                $value->gambar = 'default.jpg';
+                                                            }
+                                                            
+                                                            ?>
+                                                            <img src="<?= base_url('images/books/' . $value->gambar) ?>" width="100px" height="100px">
+                                                        </td>
+                                                        <td><?= $value->judul_buku ?></td>
+                                                        <td><?= $value->nama_staff ?></td>
+                                                        <td><?= $value->nama_siswa ?></td>
+                                                        <td><?= $value->tanggal_pinjam ?></td>
+                                                        <td><?= $value->tanggal_harus_kembali ?></td>
+                                                        <td>
+                                                            <?php if ($value->status == 1) : ?>
+                                                                <span class="badge badge-warning">Belum Dikembalikan</span>
+                                                            <?php elseif ($value->status == 2) : ?>
+                                                                <span class="badge badge-success">Sudah Dikembalikan</span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="<?= $value->id_pinjam ?>">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
                                                     <th>Gambar</th>
                                                     <th>Judul Buku</th>
-                                                    <th>Kode Buku</th>
-                                                    <th>Pengarang</th>
-                                                    <th>Penerbit</th>
-                                                    <th>Tahun Terbit</th>
-                                                    <th>Jumlah</th>
-                                                    <th>Jenis Buku</th>
-                                                    <th>Kode Klasifikasi</th>
-                                                    <th>Status</th>
+                                                    <th>Staff</th>
+                                                    <th>Siswa</th>
+                                                    <th>Tanggal Pinjam</th>
+                                                    <th>Tanggal Harus Kembali</th>
+                                                    <th>Status Pinjaman</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </tfoot>
@@ -162,159 +185,25 @@
 </div>
 </div>
 
-<!-- Modal Add book-->
-<form action="<?= route_to('book.add') ?>" method="post" enctype="multipart/form-data">
-    <?= csrf_field() ?>
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tambah Buku</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Kode Buku</label>
-                        <input type="text" class="form-control" name="kode_buku" placeholder="Kode Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Judul Buku</label>
-                        <input type="text" class="form-control" name="judul_buku" placeholder="Judul Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Pengarang</label>
-                        <input type="text" class="form-control" name="pengarang" placeholder="Pengarang" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Penerbit</label>
-                        <input type="text" class="form-control" name="penerbit" placeholder="Penerbit" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Tahun Terbit</label>
-                        <input type="text" class="form-control" name="tahun_terbit" placeholder="Tahun Terbit" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Jumlah Buku</label>
-                        <input type="text" class="form-control" name="jumlah_buku" placeholder="Jumlah Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Jenis Buku</label>
-                        <input type="text" class="form-control" name="jenis_buku" placeholder="Jenis Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status_buku</label>
-                        <input type="text" class="form-control" name="status_buku" placeholder="Status Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Kode Klasifikasi</label>
-                        <input type="text" class="form-control" name="kode_klasifikasi" placeholder="Kode Klasifikasi" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Gambar</label>
-                        <input type="file" class="form-control" name="gambar" placeholder="Gambar" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-<!-- End Modal Add book-->
-
-<!-- Modal Update book-->
-<form action="<?= route_to('book.update') ?>" method="post" enctype="multipart/form-data">
-    <?= csrf_field() ?>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Buku</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>Kode Buku</label>
-                        <input type="text" class="form-control kode_buku" name="kode_buku" placeholder="Kode Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Judul Buku</label>
-                        <input type="text" class="form-control judul_buku" name="judul_buku" placeholder="Judul Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Pengarang</label>
-                        <input type="text" class="form-control pengarang" name="pengarang" placeholder="Pengarang" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Penerbit</label>
-                        <input type="text" class="form-control penerbit" name="penerbit" placeholder="Penerbit" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Tahun Terbit</label>
-                        <input type="text" class="form-control tahun_terbit" name="tahun_terbit" placeholder="Tahun Terbit" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Jumlah Buku</label>
-                        <input type="text" class="form-control jumlah_buku" name="jumlah_buku" placeholder="Jumlah Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Jenis Buku</label>
-                        <input type="text" class="form-control jenis_buku" name="jenis_buku" placeholder="Jenis Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Status_buku</label>
-                        <input type="text" class="form-control status_buku" name="status_buku" placeholder="Status Buku" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Kode Klasifikasi</label>
-                        <input type="text" class="form-control kode_klasifikasi" name="kode_klasifikasi" placeholder="Kode Klasifikasi" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Gambar</label>
-                        <input type="file" class="form-control gambar" name="gambar" placeholder="Gambar">
-                    </div>
-                    <div class="form-group text-center">
-                        <img src="" class="img-thumbnail img-preview" width="100" id="gambar">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="hidden" name="id_buku" class="id_buku">
-                    <input type="hidden" name="name_gambar" class="name_gambar">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-<!-- End Modal Update book-->
-
 <!-- Modal Delete book -->
-<form action="<?= route_to('book.delete') ?>" method="post">
+<form action="<?= route_to('loan.delete') ?>" method="post">
     <?= csrf_field() ?>
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Buku</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Pinjaman</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
 
-                    <h4>Apakah Kamu Ingin Menghapus book Ini?</h4>
+                    <h4>Apakah Kamu Ingin Menghapus Data Pinjaman Ini?</h4>
 
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="id_buku" class="id_buku">
-                    <input type="hidden" name="name_gambar" class="name_gambar">
+                    <input type="hidden" name="id_pinjam" class="id_pinjam">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
                     <button type="submit" class="btn btn-primary">Yes</button>
                 </div>
@@ -331,38 +220,9 @@
         $('.js-data-students').select2();
         $('.js-data-books').select2();
 
-        $('.btn-edit').on('click', function() {
-            const id_buku = $(this).data('id-buku');
-            const kode_buku = $(this).data('kode-buku');
-            const judul_buku = $(this).data('judul-buku');
-            const pengarang = $(this).data('pengarang');
-            const penerbit = $(this).data('penerbit');
-            const tahun_terbit = $(this).data('tahun-terbit');
-            const jumlah_buku = $(this).data('jumlah-buku');
-            const jenis_buku = $(this).data('jenis-buku');
-            const status_buku = $(this).data('status-buku');
-            const kode_klasifikasi = $(this).data('kode-klasifikasi');
-            const gambar = $(this).data('gambar');
-            console.log(gambar)
-            $('.id_buku').val(id_buku);
-            $('.kode_buku').val(kode_buku);
-            $('.judul_buku').val(judul_buku);
-            $('.pengarang').val(pengarang);
-            $('.penerbit').val(penerbit);
-            $('.tahun_terbit').val(tahun_terbit);
-            $('.jumlah_buku').val(jumlah_buku);
-            $('.jenis_buku').val(jenis_buku);
-            $('.status_buku').val(status_buku);
-            $('.kode_klasifikasi').val(kode_klasifikasi);
-            $('.name_gambar').val(gambar);
-            $('#gambar').attr('src', '<?= base_url('images/books') ?>/' + gambar);
-            $('#editModal').modal('show');
-        });
         $('.btn-delete').on('click', function() {
             const id = $(this).data('id');
-            const gambar = $(this).data('gambar');
-            $('.id_buku').val(id);
-            $('.name_gambar').val(gambar);
+            $('.id_pinjam').val(id);
             $('#deleteModal').modal('show');
         });
 

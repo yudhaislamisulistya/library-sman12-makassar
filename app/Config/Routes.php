@@ -33,7 +33,7 @@ $routes->get('/', 'Home::index');
 
 // make groub admin
 $routes->group('admin', function ($routes) {
-    $routes->get('/', 'AdminController::index', ['as' => 'admin.dashboard']);
+    $routes->get('dashboard', 'AdminController::index', ['as' => 'admin.dashboard']);
     $routes->get('login', 'AdminController::login');
     $routes->get('logout', 'AdminController::logout');
     $routes->get('dashboard', 'AdminController::dashboard');
@@ -60,15 +60,22 @@ $routes->group('admin', function ($routes) {
     $routes->group('loan', function ($routes) {
         $routes->get('/', 'LoanController::index', ['as' => 'loan']);
         $routes->post('add', 'LoanController::add', ['as' => 'loan.add']);
-        $routes->post('update', 'LoanController::update', ['as' => 'loan.update']);
         $routes->post('delete', 'LoanController::delete', ['as' => 'loan.delete']);
+    });
+
+    // add group return
+    $routes->group('return', function ($routes) {
+        $routes->get('/', 'ReturnController::index', ['as' => 'return']);
+        $routes->post('update', 'ReturnController::update', ['as' => 'return.update']);
+        $routes->post('delete', 'ReturnController::delete', ['as' => 'return.delete']);
     });
     
 
 });
 
 $routes->group('auth', function ($routes) {
-    $routes->get('login', 'AuthController::login');
+    $routes->get('login', 'AuthController::login', ['as' => 'auth.login']);
+    $routes->post('login', 'AuthController::postLogin', ['as' => 'auth.postLogin']);
     $routes->get('logout', 'AuthController::logout');
     $routes->get('register', 'AuthController::register');
     $routes->get('forgot', 'AuthController::forgot');
@@ -80,6 +87,7 @@ $routes->group('auth', function ($routes) {
     $routes->get('change-email', 'AuthController::changeEmail');
     $routes->get('profile', 'AuthController::profile');
     $routes->get('setting', 'AuthController::setting');
+    $routes->get('reset-session', 'AuthController::resetSession');
 });
 
 // API Routes

@@ -8,12 +8,14 @@ class LoanModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'loans';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'id_pinjam';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'id_pinjam', 'id_buku', 'id_staff', 'id_siswa', 'tanggal_pinjam', 'tanggal_harus_kembali', 'tanggal_kembali','status'
+    ];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,4 +40,26 @@ class LoanModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getLoan()
+    {
+        $builder = $this->db->table('loans');
+        $builder->select('loans.id_pinjam, loans.id_buku, loans.id_staff, loans.id_siswa, loans.tanggal_pinjam, loans.tanggal_harus_kembali, loans.status, books.judul_buku, students.nama_siswa, staff.nama_staff');
+        $builder->join('books', 'books.id_buku = loans.id_buku');
+        $builder->join('students', 'students.id_siswa = loans.id_siswa');
+        $builder->join('staff', 'staff.id_staff = loans.id_staff');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function getReturn()
+    {
+        $builder = $this->db->table('loans');
+        $builder->select('loans.id_pinjam, loans.id_buku, loans.id_staff, loans.id_siswa, loans.tanggal_pinjam, loans.tanggal_harus_kembali, loans.tanggal_kembali, loans.status, books.judul_buku, students.nama_siswa, registrations.nomor_anggota');
+        $builder->join('books', 'books.id_buku = loans.id_buku');
+        $builder->join('students', 'students.id_siswa = loans.id_siswa');
+        $builder->join('registrations', 'registrations.id_siswa = students.id_siswa');
+        $query = $builder->get();
+        return $query->getResult();
+    }
 }
