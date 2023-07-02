@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\LoginModel;
 use App\Models\RegistrationModel;
 use App\Models\StudentModel;
 
@@ -10,11 +11,13 @@ class MemberController extends BaseController
 {
     protected $studentModel;
     protected $registrationModel;
+    protected $loginModel;
     // make constructor to load model
     public function __construct()
     {
         $this->studentModel = new StudentModel();
         $this->registrationModel = new RegistrationModel();
+        $this->loginModel = new LoginModel();
     }
 
     public function index()
@@ -48,8 +51,16 @@ class MemberController extends BaseController
                 'nomor_telepon' => $this->request->getVar('nomor_telepon'),
             ];
 
+            $data_login = [
+                'id_user' => $id_siswa,
+                'username' => $this->request->getVar('username'),
+                'password' => $this->request->getVar('password'),
+                'role' => 1,
+            ];
+
             $this->studentModel->insert($data_student);
             $this->registrationModel->insert($data_registration);
+            $this->loginModel->insert($data_login);
 
             return redirect()->back()->with('status', 'success');
         } catch (\Exception $e) {
