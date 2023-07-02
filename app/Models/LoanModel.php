@@ -45,7 +45,7 @@ class LoanModel extends Model
     {
         if ($id_user == null) {
             $builder = $this->db->table('loans');
-            $builder->select('loans.id_pinjam, loans.id_buku, loans.id_staff, loans.id_siswa, loans.tanggal_pinjam, loans.tanggal_harus_kembali, loans.status, books.judul_buku, students.nama_siswa, staff.nama_staff');
+            $builder->select('loans.id_pinjam, loans.id_buku, loans.id_staff, loans.id_siswa, loans.tanggal_pinjam, loans.tanggal_harus_kembali, loans.status, books.judul_buku, books.gambar, students.nama_siswa, staff.nama_staff');
             $builder->join('books', 'books.id_buku = loans.id_buku');
             $builder->join('students', 'students.id_siswa = loans.id_siswa');
             $builder->join('staff', 'staff.id_staff = loans.id_staff');
@@ -53,7 +53,7 @@ class LoanModel extends Model
             return $query->getResult();
         }
         $builder = $this->db->table('loans');
-        $builder->select('loans.id_pinjam, loans.id_buku, loans.id_staff, loans.id_siswa, loans.tanggal_pinjam, loans.tanggal_harus_kembali, loans.status, books.judul_buku, students.nama_siswa, staff.nama_staff');
+        $builder->select('loans.id_pinjam, loans.id_buku, loans.id_staff, loans.id_siswa, loans.tanggal_pinjam, loans.tanggal_harus_kembali, loans.status, books.judul_buku, books.gambar, students.nama_siswa, staff.nama_staff');
         $builder->join('books', 'books.id_buku = loans.id_buku');
         $builder->join('students', 'students.id_siswa = loans.id_siswa');
         $builder->join('staff', 'staff.id_staff = loans.id_staff');
