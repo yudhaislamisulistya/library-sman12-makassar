@@ -8,13 +8,13 @@ class HeadmasterModel extends Model
 {
     protected $DBGroup          = 'default';
     protected $table            = 'headmaster';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'id_kepala_sekolah';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_kepala_sekolah', 'nama_kapala_sekolah', 'username', 'password'
+        'id_kepala_sekolah', 'nama_kepala_sekolah', 'username', 'password'
     ];
 
     // Dates

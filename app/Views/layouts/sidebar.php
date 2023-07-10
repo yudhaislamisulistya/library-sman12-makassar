@@ -27,7 +27,17 @@
             ?>
                 <li class=" nav-item"><a href="<?= route_to('student.dashboard') ?>"><i class="la la-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
                 </li>
-                <li class=" nav-item"><a href="<?= route_to('student.book') ?>"><i class="la la-book"></i><span class="menu-title" data-i18n="Data Buku">Data Buku</span></a>
+                <li class=" nav-item"><a href="#"><i class="la la-book"></i><span class="menu-title" data-i18n="Data Buku">Data Buku</span></a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="<?= route_to('student.book') ?>"><i></i><span>Semua</span></a></li>
+                        <?php
+                        foreach (getUniqueTypeBook() as $item) {
+                            $jenis_buku = $item->jenis_buku;
+                        ?>
+                            <li><a class="menu-item" href="<?= route_to('student.book.type', $jenis_buku) ?>"><i></i><span><?= $jenis_buku ?></span></a></li>
+                        <?php } ?>
+
+                    </ul>
                 </li>
                 <li class=" nav-item"><a href="<?= route_to('student.loan') ?>"><i class="la la-bitcoin"></i><span class="menu-title" data-i18n="Kelola Peminjaman">Peminjaman</span></a>
                 </li>
@@ -43,7 +53,17 @@
                 </li>
                 <li class=" nav-item"><a href="<?= route_to('member') ?>"><i class="la la-user"></i><span class="menu-title" data-i18n="Anggota">Anggota</span></a>
                 </li>
-                <li class=" nav-item"><a href="<?= route_to('book') ?>"><i class="la la-book"></i><span class="menu-title" data-i18n="Data Buku">Data Buku</span></a>
+                <li class=" nav-item"><a href="#"><i class="la la-book"></i><span class="menu-title" data-i18n="Data Buku">Data Buku</span></a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="<?= route_to('book') ?>"><i></i><span>Semua</span></a></li>
+                        <?php
+                        foreach (getUniqueTypeBook() as $item) {
+                            $jenis_buku = $item->jenis_buku;
+                        ?>
+                            <li><a class="menu-item" href="<?= route_to('book.type', $jenis_buku) ?>"><i></i><span><?= $jenis_buku ?></span></a></li>
+                        <?php } ?>
+
+                    </ul>
                 </li>
                 <li class=" nav-item"><a href="<?= route_to('loan') ?>"><i class="la la-bitcoin"></i><span class="menu-title" data-i18n="Kelola Peminjaman">Kelola Peminjaman</span></a>
                 </li>

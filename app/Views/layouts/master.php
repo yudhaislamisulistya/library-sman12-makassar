@@ -29,6 +29,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/vendors.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>css/apexcharts.min.css">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -384,6 +385,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN: Vendor JS-->
     <script src="<?= base_url() ?>js/vendors.min.js"></script>
     <script src="<?= base_url() ?>js/datatables.min.js"></script>
+    <script src="<?= base_url() ?>js/apexcharts.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->

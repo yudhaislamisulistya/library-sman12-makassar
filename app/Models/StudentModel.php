@@ -14,7 +14,7 @@ class StudentModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_siswa', 'nama_siswa', 'username', 'password'
+        'id_siswa', 'nama_siswa', 'username', 'password', 'created_at', 'updated_at'
     ];
 
     // Dates
@@ -46,6 +46,16 @@ class StudentModel extends Model
     {
         return $this->db->table('registrations')
             ->join('students', 'registrations.id_siswa = students.id_siswa')
+            ->orderBy('registrations.created_at', 'DESC')
             ->get()->getResult();
+    }
+
+    public function getStudentRegistrationById($id)
+    {
+        return $this->db->table('registrations')
+            ->join('students', 'registrations.id_siswa = students.id_siswa')
+            ->where('registrations.id_siswa', $id)
+            ->orderBy('registrations.created_at', 'DESC')
+            ->get()->getRow();
     }
 }

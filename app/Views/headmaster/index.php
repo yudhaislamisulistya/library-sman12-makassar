@@ -30,7 +30,7 @@
                                                 <h3><?= count(getBooks()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-book-open success font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                                 <h3><?= count(getLoans()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-basket info font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -64,12 +64,24 @@
                                                 <h3><?= count(getReturns()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-call-in danger font-large-2 float-right"></i>
+                                                <i class="icon-basket-loaded danger font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            <!-- Area Spline Chart Start -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">Grafik Peminjaman dan Pengembalian</div>
+                                    <div id="data-peminjaman-pengembalian"></div>
+                                </div>
+                            </div>
+                            <!-- area spline chart end -->
                         </div>
                     </div>
                     <div class="row">
@@ -188,4 +200,69 @@
         </div>
     </div>
 </div>
+<?= $this->endSection() ?>
+
+<?php
+
+
+
+?>
+
+
+<?= $this->section('javascript') ?>
+<script>
+    $(document).ready(function() {
+
+        var options = {
+            series: [{
+                name: 'Peminjaman',
+                data: [
+                    <?php
+                    foreach (getLoansTotalLoanGroupByYear() as $data) {
+                        echo $data['total'] . ',';
+                    }
+                    ?>
+                ]
+            }, {
+                name: 'Pengembalian',
+                data: [
+                    <?php
+                    foreach (getLoansTotalReturnGroupByYear() as $data) {
+                        echo $data['total'] . ',';
+                    }
+                    ?>
+                ]
+            }],
+            chart: {
+                height: 350,
+                type: 'area'
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            xaxis: {
+                // type year
+                type: 'year',
+                categories: [
+                    <?php
+                    foreach (getLoansTotalLoanGroupByYear() as $data) {
+                        echo "'" . $data['tahun'] . "',";
+                    }
+                    ?>
+                ],
+            },
+            tooltip: {
+                x: {
+                    format: 'yyyy'
+                },
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#data-peminjaman-pengembalian"), options);
+        chart.render();
+    });
+</script>
 <?= $this->endSection() ?>

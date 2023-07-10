@@ -32,8 +32,7 @@
                         <?php } ?>
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Data Anggota</h4>
-                                <button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Anggota</button>
+                                <h4 class="card-title">Profile <?= getNameUserById(session()->get('id_user')) ?></h4>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
                                     <ul class="list-inline mb-0">
@@ -46,55 +45,130 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body card-dashboard">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-bordered zero-configuration">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nomor</th>
-                                                    <th>Tanggal Daftar</th>
-                                                    <th>NISN</th>
-                                                    <th>No. Anggota</th>
-                                                    <th>Nama Siswa</th>
-                                                    <th>Alamat</th>
-                                                    <th>Kelas</th>
-                                                    <th>No Telepon</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($data as $key => $value) { ?>
-                                                    <tr>
-                                                        <td><?= ++$key ?></td>
-                                                        <td><?= $value->tanggal_daftar ?></td>
-                                                        <td><?= $value->nisn ?></td>
-                                                        <td><?= $value->nomor_anggota ?></td>
-                                                        <td><?= $value->nama_siswa ?></td>
-                                                        <td><?= $value->alamat ?></td>
-                                                        <td><?= $value->kelas ?></td>
-                                                        <td><?= $value->nomor_telepon ?></td>
-                                                        <td>
-                                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id-siswa="<?= $value->id_siswa ?>" data-id-registrasi="<?= $value->id_registrasi ?>" data-username="<?= $value->username ?>" data-password="<?= $value->password ?>" data-nama-siswa="<?= $value->nama_siswa ?>" data-alamat="<?= $value->alamat ?>" data-kelas="<?= $value->kelas ?>" data-nisn="<?= $value->nisn ?>" data-nomor-telepon="<?= $value->nomor_telepon ?>" data-nomor-anggota="<?= $value->nomor_anggota ?>" data-tanggal-daftar="<?= $value->tanggal_daftar ?>">Edit</a>
-                                                            <!-- Delete With data-id -->
-                                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-id="<?= $value->id_siswa ?>">Delete</a>
-                                                        </td>
-                                                    </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Nomor</th>
-                                                    <th>Tanggal Daftar</th>
-                                                    <th>NISN</th>
-                                                    <th>No. Anggota</th>
-                                                    <th>Nama Siswa</th>
-                                                    <th>Alamat</th>
-                                                    <th>Kelas</th>
-                                                    <th>No Telepon</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
+                                    <?php
+
+                                    if (session()->get('role') == 1) { ?>
+                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5">
+                                            <div class="form-group">
+                                                <label>Nama Siswa</label>
+                                                <input type="text" class="form-control" name="nama_siswa" placeholder="Nama Siswa" pattern="[A-Za-z\s]+" title="Hanya diperbolehkan inputan teks" value="<?= $data->nama_siswa ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $data->username ?>" required readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Kelas</label>
+                                                <select class="form-control" name="kelas" value="<?= $data->kelas ?>" required>
+                                                    <option value="" disabled>Pilih Kelas</option>
+                                                    <?php
+                                                    $value = $data->kelas;
+                                                    if ($value == '1 IPA') {
+                                                        echo '<option value="1 IPA" selected>1 IPA</option>';
+                                                    } elseif ($value == '2 IPA') {
+                                                        echo '<option value="2 IPA" selected>2 IPA</option>';
+                                                    } elseif ($value == '3 IPA') {
+                                                        echo '<option value="3 IPA" selected>3 IPA</option>';
+                                                    } elseif ($value == '1 IPS') {
+                                                        echo '<option value="1 IPS" selected>1 IPS</option>';
+                                                    } elseif ($value == '2 IPS') {
+                                                        echo '<option value="2 IPS" selected>2 IPS</option>';
+                                                    } elseif ($value == '3 IPS') {
+                                                        echo '<option value="3 IPS" selected>3 IPS</option>';
+                                                    } elseif ($value == 'Lainnya') {
+                                                        echo '<option value="Lainnya" selected>Lainnya</option>';
+                                                    }
+                                                    ?>
+                                                    <option value="" disabled>-----------------</option>
+                                                    <option value="1 IPA">1 IPA</option>
+                                                    <option value="2 IPA">2 IPA</option>
+                                                    <option value="3 IPA">3 IPA</option>
+                                                    <option value="1 IPS">1 IPS</option>
+                                                    <option value="2 IPS">2 IPS</option>
+                                                    <option value="3 IPS">3 IPS</option>
+                                                    <option value="Lainnya">Lainnya</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>NISN</label>
+                                                <input type="text" class="form-control" name="nisn" placeholder="NISN" value="<?= $data->nisn ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Anggota</label>
+                                                <input type="text" class="form-control" name="nomor_anggota" placeholder="Nomor Anggota" value="<?= $data->nomor_anggota ?>" required readonly>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Alamat</label>
+                                                <textarea class="form-control" name="alamat" rows="3" placeholder="Alamat" required><?= $data->alamat ?></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nomor Telepon</label>
+                                                <input type="text" class="form-control" name="nomor_telepon" value="<?= $data->nomor_telepon ?>" placeholder="Nomor Telepon" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Change Profile</button>
+                                        </form>
+                                        <form action="<?= route_to('profile.changePassword') ?>" method="post">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Konfirmasi Password</label>
+                                                <input type="password" class="form-control" name="konfirmasi_password" placeholder="Konfirmasi Password" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                        </form>
+                                    <?php } elseif (session()->get('role') == 2) { ?>
+                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5">
+                                            <div class="form-group">
+                                                <label>Nama Staff</label>
+                                                <input type="text" class="form-control" name="nama_staff" placeholder="Nama Staff" pattern="[A-Za-z\s]+" title="Hanya diperbolehkan inputan teks" value="<?= $data['nama_staff'] ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $data['username'] ?>" required readonly>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Change Profile</button>
+                                        </form>
+                                        <form action="<?= route_to('profile.changePassword') ?>" method="post">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Konfirmasi Password</label>
+                                                <input type="password" class="form-control" name="konfirmasi_password" placeholder="Konfirmasi Password" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                        </form>
+                                    <?php } elseif (session()->get('role') == 3) { ?>
+                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5">
+                                            <div class="form-group">
+                                                <label>Nama Kepala Sekolah</label>
+                                                <input type="text" class="form-control" name="nama_kepala_sekolah" placeholder="Nama Kepala Sekolah" pattern="[A-Za-z\s]+" title="Hanya diperbolehkan inputan teks" value="<?= $data['nama_kepala_sekolah'] ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $data['username'] ?>" required readonly>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Change Profile</button>
+                                        </form>
+                                        <form action="<?= route_to('profile.changePassword') ?>" method="post">
+                                            <div class="form-group">
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Konfirmasi Password</label>
+                                                <input type="password" class="form-control" name="konfirmasi_password" placeholder="Konfirmasi Password" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
+                                        </form>
+                                    <?php }
+
+                                    ?>
+
                                 </div>
                             </div>
                         </div>
@@ -134,7 +208,7 @@
                     </div>
                     <div class="form-group">
                         <label>Kelas</label>
-                        <select class="form-control" name="kelas" required>
+                        <select class="form-control" name="kelas" id="kelas" required>
                             <option value="" disabled>Pilih Kelas</option>
                             <option value="1 IPA">1 IPA</option>
                             <option value="2 IPA">2 IPA</option>
@@ -290,6 +364,8 @@
 <?= $this->section('javascript') ?>
 <script>
     $(document).ready(function() {
+        $('.kelas').val(kelas);
+
         $('.btn-edit').on('click', function() {
             const id_siswa = $(this).data('id-siswa');
             const id_registrasi = $(this).data('id-registrasi');

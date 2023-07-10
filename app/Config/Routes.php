@@ -49,6 +49,7 @@ $routes->group('admin', ['filter' => 'admin:dual,noreturn'], function ($routes) 
         $routes->post('add', 'BookController::add', ['as' => 'book.add']);
         $routes->post('update', 'BookController::update', ['as' => 'book.update']);
         $routes->post('delete', 'BookController::delete', ['as' => 'book.delete']);
+        $routes->get('type/(:any)', 'BookController::type/$1', ['as' => 'book.type']);
     });
 
     // add group loan
@@ -79,6 +80,7 @@ $routes->group('student', ['filter' => 'student:dual,noreturn'], function ($rout
     // add group book
     $routes->group('book', function ($routes) {
         $routes->get('/', 'BookController::index', ['as' => 'student.book']);
+        $routes->get('type/(:any)', 'BookController::type/$1', ['as' => 'student.book.type']);
     });
 
     // add group loan
@@ -95,19 +97,24 @@ $routes->group('student', ['filter' => 'student:dual,noreturn'], function ($rout
 // make group headmaster with filter auth
 $routes->group('headmaster', ['filter' => 'headmaster:dual,noreturn'], function ($routes) {
     $routes->get('dashboard', 'HeadmasterController::index', ['as' => 'headmaster.dashboard']);
-    // make group loan
     $routes->group('loan', function ($routes) {
         $routes->get('/', 'LoanController::index', ['as' => 'headmaster.loan']);
     });
-    
 });
 
 $routes->group('auth', function ($routes) {
     $routes->get('login', 'AuthController::login', ['as' => 'auth.login', 'filter' => 'noauth']);
     $routes->post('login', 'AuthController::postLogin', ['as' => 'auth.postLogin', 'filter' => 'noauth']);
+    $routes->get('register', 'AuthController::register', ['as' => 'auth.register']);
+    $routes->post('register', "MemberController::add", ['as' => 'auth.postRegister']);
     $routes->get('logout', 'AuthController::logout', ['as' => 'auth.logout']);
     $routes->post('change-password', 'AuthController::changePassword', ['as' => 'auth.changePassword']);
-    $routes->get('profile', 'AuthController::profile', ['as' => 'auth.profile']);
+});
+
+$routes->group('profile', function ($routes) {
+    $routes->get('/', 'ProfileController::index', ['as' => 'profile']);
+    $routes->post('update', 'ProfileController::update', ['as' => 'profile.update']);
+    $routes->post('change-password', 'ProfileController::changePassword', ['as' => 'profile.changePassword']);
 });
 
 // API Routes

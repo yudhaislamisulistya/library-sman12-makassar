@@ -64,7 +64,8 @@
                                                     <th>Tahun Terbit</th>
                                                     <th>Jumlah</th>
                                                     <th>Jenis Buku</th>
-                                                    <th>Kode Klasifikasi</th>
+                                                    <th>Rak</th>
+                                                    <!-- <th>Kode Klasifikasi</th> -->
                                                     <th>Status</th>
                                                     <?php
                                                     
@@ -95,7 +96,7 @@
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->tahun_terbit ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->jumlah_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->jenis_buku ?></td>
-                                                        <td style="text-align: center;vertical-align: middle;"><?= $value->kode_klasifikasi ?></td>
+                                                        <td style="text-align: center;vertical-align: middle;"><?= $value->rak ?></td>
                                                         <td style="text-align: center;vertical-align: middle;">
                                                             <?php if ($value->status_buku == 1) { ?>
                                                                 <span class="badge badge-success">Tersedia</span>
@@ -107,7 +108,7 @@
                                                         
                                                         if (session()->get('role') == 2) {
                                                             echo '<td style="text-align: center;vertical-align: middle;">';
-                                                            echo '<a href="#" class="btn btn-warning btn-sm btn-edit" data-id-buku="' . $value->id_buku . '" data-judul-buku="' . $value->judul_buku . '" data-kode-buku="' . $value->kode_buku . '" data-pengarang="' . $value->pengarang . '" data-penerbit="' . $value->penerbit . '" data-tahun-terbit="' . $value->tahun_terbit . '" data-jumlah-buku="' . $value->jumlah_buku . '" data-jenis-buku="' . $value->jenis_buku . '" data-kode-klasifikasi="' . $value->kode_klasifikasi . '" data-status-buku="' . $value->status_buku . '" data-gambar="' . $value->gambar . '">Edit</a>';
+                                                            echo '<a href="#" class="btn btn-warning btn-sm btn-edit" data-id-buku="' . $value->id_buku . '" data-judul-buku="' . $value->judul_buku . '" data-kode-buku="' . $value->kode_buku . '" data-pengarang="' . $value->pengarang . '" data-penerbit="' . $value->penerbit . '" data-tahun-terbit="' . $value->tahun_terbit . '" data-jumlah-buku="' . $value->jumlah_buku . '" data-jenis-buku="' . $value->jenis_buku . '" data-rak="' . $value->rak . '" data-kode-klasifikasi="' . $value->kode_klasifikasi . '" data-status-buku="' . $value->status_buku . '" data-gambar="' . $value->gambar . '">Edit</a>';
                                                             echo '<a href="#" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-id="' . $value->id_buku . '" data-target="#deleteModal">Delete</a>';
                                                             echo '</td>';
                                                         }
@@ -126,7 +127,8 @@
                                                     <th>Tahun Terbit</th>
                                                     <th>Jumlah</th>
                                                     <th>Jenis Buku</th>
-                                                    <th>Kode Klasifikasi</th>
+                                                    <th>Rak</th>
+                                                    <!-- <th>Kode Klasifikasi</th> -->
                                                     <th>Status</th>
                                                     <?php
                                                     
@@ -193,13 +195,17 @@
                         <input type="text" class="form-control" name="jenis_buku" placeholder="Jenis Buku" required>
                     </div>
                     <div class="form-group">
+                        <label>Rak</label>
+                        <input type="text" class="form-control" name="rak" placeholder="Rak" required>
+                    </div>
+                    <div class="form-group">
                         <label>Status_buku</label>
                         <input type="text" class="form-control" name="status_buku" placeholder="Status Buku" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Kode Klasifikasi</label>
                         <input type="text" class="form-control" name="kode_klasifikasi" placeholder="Kode Klasifikasi" required>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>Gambar</label>
                         <input type="file" class="form-control" name="gambar" placeholder="Gambar" required>
@@ -257,13 +263,17 @@
                         <input type="text" class="form-control jenis_buku" name="jenis_buku" placeholder="Jenis Buku" required>
                     </div>
                     <div class="form-group">
+                        <label>Rak</label>
+                        <input type="text" class="form-control rak" name="rak" placeholder="Rak" required>
+                    </div>
+                    <div class="form-group">
                         <label>Status_buku</label>
                         <input type="text" class="form-control status_buku" name="status_buku" placeholder="Status Buku" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Kode Klasifikasi</label>
                         <input type="text" class="form-control kode_klasifikasi" name="kode_klasifikasi" placeholder="Kode Klasifikasi" required>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>Gambar</label>
                         <input type="file" class="form-control gambar" name="gambar" placeholder="Gambar">
@@ -325,8 +335,9 @@
             const tahun_terbit = $(this).data('tahun-terbit');
             const jumlah_buku = $(this).data('jumlah-buku');
             const jenis_buku = $(this).data('jenis-buku');
+            const rak = $(this).data('rak');
             const status_buku = $(this).data('status-buku');
-            const kode_klasifikasi = $(this).data('kode-klasifikasi');
+            // const kode_klasifikasi = $(this).data('kode-klasifikasi');
             const gambar = $(this).data('gambar');
             console.log(gambar)
             $('.id_buku').val(id_buku);
@@ -337,8 +348,9 @@
             $('.tahun_terbit').val(tahun_terbit);
             $('.jumlah_buku').val(jumlah_buku);
             $('.jenis_buku').val(jenis_buku);
+            $('.rak').val(rak);
             $('.status_buku').val(status_buku);
-            $('.kode_klasifikasi').val(kode_klasifikasi);
+            // $('.kode_klasifikasi').val(kode_klasifikasi);
             $('.name_gambar').val(gambar);
             $('#gambar').attr('src', '<?= base_url('images/books') ?>/' + gambar);
             $('#editModal').modal('show');

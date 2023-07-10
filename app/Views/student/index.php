@@ -18,6 +18,56 @@
                         Selamat Datang! <strong><?= getNameUserById(session()->get('id_user')) ?> </strong> Anda Login Sebagai Siswa
                     </div>
                 </div>
+                <?php
+
+                $dateNow = date('Y-m-d');
+
+                $data_loans = getLoans(session()->get('id_user'));
+                $data_loans = array_filter($data_loans, function ($var) {
+                    return ($var->status == 1);
+                });
+                // cek selisih $dateNow dengan $loan->tanggal_harus_kembali
+                foreach ($data_loans as $loan) {
+                    $tanggal_harus_kembali = date_create($loan->tanggal_harus_kembali);
+                    $tanggal_harus_kembali = date_format($tanggal_harus_kembali, 'Y-m-d');
+
+                    $diff = date_diff(date_create($tanggal_harus_kembali), date_create($dateNow));
+                    $selisih_hari = $diff->days;
+
+                    if ($tanggal_harus_kembali > $dateNow) { ?>
+                        <div class="col-xl-12 col-12">
+                            <div class="alert bg-warning alert-icon-right alert-arrow-right alert-dismissible mb-2" role="alert">
+                                <span class="alert-icon"><i class="la la-warning"></i></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Notifikasi Pengembalian!</strong> Pengembalian Buku (<?= getBookById($loan->id_buku)['judul_buku'] ?>) -<?= $selisih_hari ?> Hari, Anda Sudah Masuk Waktu Tenggang, Silahkan ke Perpustakaan Untuk Mengembalikan atau Memperpanjang Peminjaman</a>.
+                            </div>
+                        </div>
+                    <?php } elseif ($tanggal_harus_kembali < $dateNow) { ?>
+                        <div class="col-xl-12 col-12">
+                            <div class="alert bg-warning alert-icon-right alert-arrow-right alert-dismissible mb-2" role="alert">
+                                <span class="alert-icon"><i class="la la-warning"></i></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Notifikasi Pengembalian!</strong> Pengembalian Buku (<?= getBookById($loan->id_buku)['judul_buku'] ?>) +<?= $selisih_hari ?> Hari, Anda Sudah Masuk Waktu Tenggang, Silahkan ke Perpustakaan Untuk Mengembalikan atau Memperpanjang Peminjaman, Anda Sudah di Kenakan Denda sesuai dengan peraturan Perpusatakan</a>.
+                            </div>
+                        </div>
+                    <?php } else { ?>
+                        <div class="col-xl-12 col-12">
+                            <div class="alert bg-warning alert-icon-right alert-arrow-right alert-dismissible mb-2" role="alert">
+                                <span class="alert-icon"><i class="la la-warning"></i></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>Notifikasi Pengembalian!</strong> Pengembalian Buku (<?= getBookById($loan->id_buku)['judul_buku'] ?>) Hari Ini, Anda Sudah Masuk Waktu Tenggang, Silahkan ke Perpustakaan Untuk Mengembalikan atau Memperpanjang Peminjaman, Anda Sudah di Kenakan Denda sesuai dengan peraturan Perpusatakan</a>.
+                            </div>
+                        </div>
+                <?php }
+                }
+
+                ?>
                 <div class="col-xl-12 col-12">
                     <div class="row">
                         <div class="col-lg-4 col-12">
@@ -30,7 +80,7 @@
                                                 <h3><?= count(getBooks()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-book-open success font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -44,10 +94,10 @@
                                         <div class="media d-flex">
                                             <div class="media-body text-left">
                                                 <h6 class="text-muted">Peminjaman</h6>
-                                                <h3><?= count(getLoans(session()->get('id_user'))) ?></h3>
+                                                <h3><?= count(getLoans()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-basket info font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -61,10 +111,10 @@
                                         <div class="media d-flex">
                                             <div class="media-body text-left">
                                                 <h6 class="text-muted">Pengembalian</h6>
-                                                <h3><?= count(getReturns(session()->get('id_user'))) ?></h3>
+                                                <h3><?= count(getReturns()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-call-in danger font-large-2 float-right"></i>
+                                                <i class="icon-basket-loaded danger font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>

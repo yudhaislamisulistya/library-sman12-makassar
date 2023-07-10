@@ -33,6 +33,7 @@ class MemberController extends BaseController
         try {
             $id_siswa = rand(1000000, 9999999);
             $id_registrasi = rand(1000000, 9999999);
+            $year = substr(date('Y'), 2, 2);
 
             $data_student = [
                 'id_siswa' => $id_siswa,
@@ -46,7 +47,8 @@ class MemberController extends BaseController
                 'id_siswa' => $id_siswa,
                 'tanggal_daftar' => date('Y-m-d'),
                 'kelas' => $this->request->getVar('kelas'),
-                'nomor_anggota' => $this->request->getVar('nomor_anggota'),
+                'nisn' => $this->request->getVar('nisn'),
+                'nomor_anggota' => $year . $this->request->getVar('nomor_anggota'),
                 'alamat' => $this->request->getVar('alamat'),
                 'nomor_telepon' => $this->request->getVar('nomor_telepon'),
             ];
@@ -97,6 +99,7 @@ class MemberController extends BaseController
 
             $data_registration = [
                 'kelas' => $this->request->getVar('kelas'),
+                'nisn' => $this->request->getVar('nisn'),
                 'nomor_anggota' => $this->request->getVar('nomor_anggota'),
                 'alamat' => $this->request->getVar('alamat'),
                 'nomor_telepon' => $this->request->getVar('nomor_telepon'),
@@ -107,8 +110,6 @@ class MemberController extends BaseController
 
             return redirect()->back()->with('status', 'success');
         } catch (\Exception $e) {
-            var_dump($e);
-            die();
             return redirect()->back()->with('status', 'failed');
         }
     }

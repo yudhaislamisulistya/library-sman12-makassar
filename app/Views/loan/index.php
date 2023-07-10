@@ -110,9 +110,9 @@
                                 <h4 class="card-title">Data Peminjaman</h4>
                                 <?php
 
-                                if (session()->get('role') == 2) {
-                                    echo '<button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>';
-                                }
+                                // if (session()->get('role') == 2) {
+                                //     echo '<button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>';
+                                // }
 
                                 ?>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>

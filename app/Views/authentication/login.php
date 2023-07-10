@@ -66,6 +66,14 @@ License: You must have a valid license purchased only from themeforest(the above
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="col-lg-4 col-md-8 col-10 box-shadow-2 p-0">
                             <div class="card border-grey border-lighten-3 m-0">
+                                <?php if (session()->getFlashData('status') == "failed") { ?>
+                                    <div class="alert bg-danger alert-dismissible mb-2" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <strong>Proses Login Gagal!</strong> Username atau Password salah.
+                                    </div>
+                                <?php } ?>
                                 <div class="card-header border-0">
                                     <div class="card-title text-center">
                                         <div class="p-1"><img src="<?= base_url() ?>images/sma.png" alt="branding logo"></div>
@@ -88,7 +96,11 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <i class="la la-key"></i>
                                                 </div>
                                             </fieldset>
+
                                             <button type="submit" class="btn btn-info btn-block"><i class="ft-unlock"></i> Login</button>
+                                            <div class="text-center pt-1">
+                                                <a href="<?= route_to('auth.register') ?>" class="btn btn-outline-primary btn-block"><i class="ft-user"></i> Register</a>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

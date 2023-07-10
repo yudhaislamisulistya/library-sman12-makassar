@@ -30,7 +30,7 @@
                                                 <h3><?= count(getBooks()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-book-open success font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                                 <h3><?= count(getLoans()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-basket info font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -64,7 +64,7 @@
                                                 <h3><?= count(getReturns()) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-call-in danger font-large-2 float-right"></i>
+                                                <i class="icon-basket-loaded danger font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -100,13 +100,6 @@
                                                         <th>Tanggal Harus Kembali</th>
                                                         <th>Tanggal Kembali</th>
                                                         <th>Denda</th>
-                                                        <?php
-
-                                                        if (session()->get('role') == 2) {
-                                                            echo '<th>Action</th>';
-                                                        }
-
-                                                        ?>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -144,15 +137,6 @@
                                                                 echo $denda;
                                                                 ?>
                                                             </td>
-                                                            <?php
-
-                                                            if (session()->get('role') == 2) {
-                                                                echo '<td>
-                                                            <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="' . $data_return->id_pinjam . '" data-nomor-anggota="' . $data_return->nomor_anggota . '" data-nama-siswa="' . $data_return->nama_siswa . '" data-judul-buku="' . $data_return->judul_buku . '" data-tanggal-pinjam="' . $data_return->tanggal_pinjam . '" data-tanggal-harus-kembali="' . $data_return->tanggal_harus_kembali . '" data-tanggal-kembali="' . $data_return->tanggal_kembali . '" data-denda="' . $denda . '"><i class="ft-edit"></i></a>
-                                                            <button class="btn btn-danger btn-sm btn-delete" data-id="' . $data_return->id_pinjam . '" data-toggle="modal" data-target="#deleteModal"><i class="ft-trash"></i></button>
-                                                        </td>';
-                                                            }
-                                                            ?>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </tbody>
@@ -165,13 +149,6 @@
                                                         <th>Tanggal Harus Kembali</th>
                                                         <th>Tanggal Kembali</th>
                                                         <th>Denda</th>
-                                                        <?php
-
-                                                        if (session()->get('role') == 2) {
-                                                            echo '<th>Action</th>';
-                                                        }
-
-                                                        ?>
                                                     </tr>
                                                 </tfoot>
                                             </table>

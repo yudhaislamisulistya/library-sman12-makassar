@@ -22,6 +22,7 @@ class BookModel extends Model
         'tahun_terbit',
         'jumlah_buku',
         'jenis_buku',
+        'rak',
         'kode_klasifikasi', 
         'status_buku',
         'gambar',
@@ -54,7 +55,7 @@ class BookModel extends Model
     public function getBookByDate($tahun)
     {
         $builder = $this->db->table('books');
-        $builder->select('books.id_buku, books.kode_buku, books.judul_buku, books.pengarang, books.penerbit, books.tahun_terbit, books.jumlah_buku, books.jenis_buku, books.kode_klasifikasi, books.status_buku, books.gambar');
+        $builder->select('books.id_buku, books.kode_buku, books.judul_buku, books.pengarang, books.penerbit, books.tahun_terbit, books.jumlah_buku, books.jenis_buku, books.rak, books.kode_klasifikasi, books.status_buku, books.gambar');
         $builder->where('YEAR(books.created_at)', $tahun);
         $query = $builder->get();
         return $query->getResult();

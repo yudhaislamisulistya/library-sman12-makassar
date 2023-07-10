@@ -32,7 +32,8 @@ class BookController extends BaseController
             $tahun_terbit = $this->request->getVar('tahun_terbit');
             $jumlah_buku = $this->request->getVar('jumlah_buku');
             $jenis_buku = $this->request->getVar('jenis_buku');
-            $kode_klasifikasi = $this->request->getVar('kode_klasifikasi');
+            $rak = $this->request->getVar('rak');
+            // $kode_klasifikasi = $this->request->getVar('kode_klasifikasi');
             $status_buku = $this->request->getVar('status_buku');
             $gambar = $this->request->getFile('gambar');
             $name = $gambar->getRandomName();
@@ -47,7 +48,8 @@ class BookController extends BaseController
                 'tahun_terbit' => $tahun_terbit,
                 'jumlah_buku' => $jumlah_buku,
                 'jenis_buku' => $jenis_buku,
-                'kode_klasifikasi' => $kode_klasifikasi,
+                'rak' => $rak,
+                // 'kode_klasifikasi' => $kode_klasifikasi,
                 'status_buku' => $status_buku,
                 'gambar' => $name,
             ];
@@ -56,8 +58,6 @@ class BookController extends BaseController
             $gambar->move('images/books', $name);
             return redirect()->back()->with('status', 'success');
         } catch (\Exception $e) {
-            var_dump($e);
-            die();
             return redirect()->back()->with('status', 'failed');
         }
     }
@@ -74,7 +74,8 @@ class BookController extends BaseController
             $tahun_terbit = $this->request->getVar('tahun_terbit');
             $jumlah_buku = $this->request->getVar('jumlah_buku');
             $jenis_buku = $this->request->getVar('jenis_buku');
-            $kode_klasifikasi = $this->request->getVar('kode_klasifikasi');
+            $rak = $this->request->getVar('rak');
+            // $kode_klasifikasi = $this->request->getVar('kode_klasifikasi');
             $status_buku = $this->request->getVar('status_buku');
             if ($this->request->getFile('gambar')->getFilename() != '') {
                 $gambar = $this->request->getFile('gambar');
@@ -87,7 +88,8 @@ class BookController extends BaseController
                     'tahun_terbit' => $tahun_terbit,
                     'jumlah_buku' => $jumlah_buku,
                     'jenis_buku' => $jenis_buku,
-                    'kode_klasifikasi' => $kode_klasifikasi,
+                    'rak' => $rak,
+                    // 'kode_klasifikasi' => $kode_klasifikasi,
                     'status_buku' => $status_buku,
                     'gambar' => $name,
                 ];
@@ -103,7 +105,8 @@ class BookController extends BaseController
                     'tahun_terbit' => $tahun_terbit,
                     'jumlah_buku' => $jumlah_buku,
                     'jenis_buku' => $jenis_buku,
-                    'kode_klasifikasi' => $kode_klasifikasi,
+                    'rak' => $rak,
+                    // 'kode_klasifikasi' => $kode_klasifikasi,
                     'status_buku' => $status_buku,
                 ];
             }
@@ -129,5 +132,11 @@ class BookController extends BaseController
         } catch (\Exception $e) {
             return redirect()->back()->with('status', 'failed');
         }
+    }
+
+    public function type($jenis_buku)
+    {
+        $data = $this->bookModel->where('jenis_buku', $jenis_buku)->get()->getResult();
+        return view('book/index', compact('data'));
     }
 }

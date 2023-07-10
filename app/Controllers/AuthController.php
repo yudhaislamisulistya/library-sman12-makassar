@@ -14,18 +14,23 @@ class AuthController extends BaseController
     }
     public function login()
     {
-        if(cekUser()){
+        if (cekUser()) {
             // if check session role user
-            if(session()->get('role') == 1){
+            if (session()->get('role') == 1) {
                 return redirect()->to(base_url('student/dashboard'));
-            }else if(session()->get('role') == 2){
+            } else if (session()->get('role') == 2) {
                 return redirect()->to(base_url('admin/dashboard'));
-            }else{
+            } else {
                 return redirect()->to(base_url('headmaster/dashboard'));
             }
         }
 
         return view('authentication/login');
+    }
+
+    public function register()
+    {
+        return view('authentication/register');
     }
 
     public function postLogin()
@@ -50,12 +55,12 @@ class AuthController extends BaseController
                 return redirect()->to(base_url('headmaster/dashboard'));
             }
         } else {
-            session()->setFlashdata('error', 'Username atau Password salah');
-            return redirect()->to(base_url('auth/login'));
+            return redirect()->back()->with('status', 'failed');
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         $this->resetSession();
         return redirect()->to(base_url('auth/login'));
     }
