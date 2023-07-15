@@ -94,7 +94,7 @@
                                                                 $datetime1 = new DateTime($today);
                                                                 $datetime2 = new DateTime($due_date);
                                                                 $interval = $datetime1->diff($datetime2);
-                                                                $denda = $interval->format('%a') * 5000;
+                                                                $denda = $interval->format('%a') * 1000;
                                                                 $denda = "Rp. " . number_format($denda, 0, ',', '.');
                                                             }
                                                             echo $denda;

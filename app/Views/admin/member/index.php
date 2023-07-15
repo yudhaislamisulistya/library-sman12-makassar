@@ -173,7 +173,8 @@
                     </div>
                     <div class="form-group">
                         <label>Nomor Telepon</label>
-                        <input type="number" class="form-control" name="nomor_telepon" placeholder="Nomor Telepon" required>
+                        <input type="text" class="form-control" name="nomor_telepon" placeholder="Nomor Telepon" pattern="[0-9\s]+" title="Hanya diperbolehkan inputan angka" required>
+
                     </div>
                 </div>
                 <!-- notes -->
@@ -242,7 +243,7 @@
                     </div>
                     <div class="form-group">
                         <label>Nomor Telepon</label>
-                        <input type="number" class="form-control nomor_telepon" name="nomor_telepon" placeholder="Nomor Telepon" required>
+                        <input type="text" class="form-control nomor_telepon" name="nomor_telepon" placeholder="Nomor Telepon" pattern="[0-9\s]+" title="Hanya diperbolehkan inputan angka" required>
                     </div>
                 </div>
                 <div class="modal-footer">

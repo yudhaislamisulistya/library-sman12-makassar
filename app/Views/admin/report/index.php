@@ -42,7 +42,7 @@
                                                 <h3><?= count($data_date_books) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-book-open success font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +59,7 @@
                                                 <h3><?= count($data_date_loans) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-trophy success font-large-2 float-right"></i>
+                                                <i class="icon-basket info font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                                 <h3><?= count($data_date_returns) ?></h3>
                                             </div>
                                             <div class="align-self-center">
-                                                <i class="icon-call-in danger font-large-2 float-right"></i>
+                                                <i class="icon-basket-loaded danger font-large-2 float-right"></i>
                                             </div>
                                         </div>
                                     </div>
