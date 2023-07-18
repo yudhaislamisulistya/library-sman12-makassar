@@ -142,17 +142,32 @@
                                                             </td>
                                                             <td>
                                                                 <?php
-                                                                // check if date today is greater than due date of book
                                                                 $today = date('Y-m-d');
                                                                 $due_date = $data_return->tanggal_harus_kembali;
                                                                 $denda = 0;
-                                                                if ($today > $due_date) {
-                                                                    $datetime1 = new DateTime($today);
-                                                                    $datetime2 = new DateTime($due_date);
-                                                                    $interval = $datetime1->diff($datetime2);
-                                                                    $denda = $interval->format('%a') * 1000;
-                                                                    $denda = "Rp. " . number_format($denda, 0, ',', '.');
+
+                                                                $tanggal_kembali = $data_return->tanggal_kembali;
+
+                                                                if ($tanggal_kembali != null) {
+                                                                    if ($tanggal_kembali > $due_date) {
+                                                                        $datetime1_new = new DateTime($tanggal_kembali);
+                                                                        $datetime2_new = new DateTime($due_date);
+                                                                        $interval = $datetime1_new->diff($datetime2_new);
+                                                                        $denda = $interval->format('%a') * 1000;
+                                                                        $denda = "Rp. " . number_format($denda, 0, ',', '.');
+                                                                    } else if ($tanggal_kembali > $due_date) {
+                                                                        $denda = 0;
+                                                                    }
+                                                                } else {
+                                                                    if ($today > $due_date) {
+                                                                        $datetime1 = new DateTime($today);
+                                                                        $datetime2 = new DateTime($due_date);
+                                                                        $interval = $datetime1->diff($datetime2);
+                                                                        $denda = $interval->format('%a') * 1000;
+                                                                        $denda = "Rp. " . number_format($denda, 0, ',', '.');
+                                                                    }
                                                                 }
+
                                                                 echo $denda;
                                                                 ?>
                                                             </td>

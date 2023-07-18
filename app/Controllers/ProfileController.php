@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\HeadmasterModel;
+use App\Models\LoginModel;
 use App\Models\RegistrationModel;
 use App\Models\StaffModel;
 use App\Models\StudentModel;
@@ -14,6 +15,7 @@ class ProfileController extends BaseController
     protected $headmasterModel;
     protected $studentModel;
     protected $registrationModel;
+    protected $loginModel;
 
     public function __construct()
     {
@@ -21,6 +23,7 @@ class ProfileController extends BaseController
         $this->headmasterModel = new HeadmasterModel();
         $this->studentModel = new StudentModel();
         $this->registrationModel = new RegistrationModel();
+        $this->loginModel = new LoginModel();
     }
 
     public function index()
@@ -55,7 +58,7 @@ class ProfileController extends BaseController
 
                 $this->registrationModel->update($id_registrasi, $data_registration);
                 $this->studentModel->update($id_user, $data_student);
-                
+
                 return redirect()->back()->with('status', 'success');
             } elseif (session()->get('role') == 2) {
 
@@ -93,7 +96,16 @@ class ProfileController extends BaseController
                 'password' => $password,
             ];
 
-            $this->staffModel->update($id_user, $data);
+
+            if (session()->get('role') == 1) {
+                $this->studentModel->update($id_user, $data);
+            } elseif (session()->get('role') == 2) {
+                $this->staffModel->update($id_user, $data);
+            } elseif (session()->get('role') == 3) {
+                $this->headmasterModel->update($id_user, $data);
+            }
+
+            $this->loginModel->where('id_user', $id_user)->set($data)->update();
             return redirect()->back()->with('status', 'success');
         } catch (\Exception $th) {
             return redirect()->back()->with('status', 'failed');

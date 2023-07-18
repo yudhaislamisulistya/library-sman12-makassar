@@ -86,17 +86,32 @@
                                                         </td>
                                                         <td>
                                                             <?php
-                                                            // check if date today is greater than due date of book
                                                             $today = date('Y-m-d');
                                                             $due_date = $data_return->tanggal_harus_kembali;
                                                             $denda = 0;
-                                                            if ($today > $due_date) {
-                                                                $datetime1 = new DateTime($today);
-                                                                $datetime2 = new DateTime($due_date);
-                                                                $interval = $datetime1->diff($datetime2);
-                                                                $denda = $interval->format('%a') * 1000;
-                                                                $denda = "Rp. " . number_format($denda, 0, ',', '.');
+
+                                                            $tanggal_kembali = $data_return->tanggal_kembali;
+
+                                                            if ($tanggal_kembali != null) {
+                                                                if ($tanggal_kembali > $due_date) {
+                                                                    $datetime1_new = new DateTime($tanggal_kembali);
+                                                                    $datetime2_new = new DateTime($due_date);
+                                                                    $interval = $datetime1_new->diff($datetime2_new);
+                                                                    $denda = $interval->format('%a') * 1000;
+                                                                    $denda = "Rp. " . number_format($denda, 0, ',', '.');
+                                                                } else if ($tanggal_kembali > $due_date) {
+                                                                    $denda = 0;
+                                                                }
+                                                            } else {
+                                                                if ($today > $due_date) {
+                                                                    $datetime1 = new DateTime($today);
+                                                                    $datetime2 = new DateTime($due_date);
+                                                                    $interval = $datetime1->diff($datetime2);
+                                                                    $denda = $interval->format('%a') * 1000;
+                                                                    $denda = "Rp. " . number_format($denda, 0, ',', '.');
+                                                                }
                                                             }
+
                                                             echo $denda;
                                                             ?>
                                                         </td>
@@ -227,46 +242,70 @@
 
 <?= $this->section('javascript') ?>
 <script>
+    $(document).on('click', '.btn-edit', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        const nomor_anggota = $(this).data('nomor-anggota');
+        const nama_siswa = $(this).data('nama-siswa');
+        const judul_buku = $(this).data('judul-buku');
+        const tanggal_pinjam = $(this).data('tanggal-pinjam');
+        const tanggal_harus_kembali = $(this).data('tanggal-harus-kembali');
+        const tanggal_kembali = $(this).data('tanggal-kembali');
+        const denda = $(this).data('denda');
+        console.log(id);
+        console.log(nomor_anggota);
+        console.log(nama_siswa);
+        console.log(judul_buku);
+        console.log(tanggal_pinjam);
+        console.log(tanggal_harus_kembali);
+        console.log(tanggal_kembali);
+        console.log(denda);
+
+        if (tanggal_kembali === "") {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+
+            var formattedDate = yyyy + '-' + mm + '-' + dd;
+
+            console.log("Hari Ini Adalah");
+            console.log(formattedDate);
+
+            $('.tanggal_kembali').val(formattedDate);
+        } else {
+            $('.tanggal_kembali').val(tanggal_kembali);
+        }
+
+        $('.id_pinjam').val(id);
+        $('.nomor_anggota').val(nomor_anggota);
+        $('.nama_siswa').val(nama_siswa);
+        $('.judul_buku').val(judul_buku);
+        $('.tanggal_pinjam').val(tanggal_pinjam);
+        $('.tanggal_harus_kembali').val(tanggal_harus_kembali);
+        $('.denda').val(denda);
+        $('#editModal').modal('show');
+    });
+
+    $(document).on('click', '.btn-delete', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        $('.id_pinjam').val(id);
+        $('#deleteModal').modal('show');
+    });
     $(document).ready(function() {
 
         $('.js-data-students').select2();
         $('.js-data-books').select2();
 
-        $('.btn-edit').on('click', function() {
-            const id = $(this).data('id');
-            const nomor_anggota = $(this).data('nomor-anggota');
-            const nama_siswa = $(this).data('nama-siswa');
-            const judul_buku = $(this).data('judul-buku');
-            const tanggal_pinjam = $(this).data('tanggal-pinjam');
-            const tanggal_harus_kembali = $(this).data('tanggal-harus-kembali');
-            const tanggal_kembali = $(this).data('tanggal-kembali');
-            const denda = $(this).data('denda');
-            console.log(id);
-            console.log(nomor_anggota);
-            console.log(nama_siswa);
-            console.log(judul_buku);
-            console.log(tanggal_pinjam);
-            console.log(tanggal_harus_kembali);
-            console.log(tanggal_kembali);
-            console.log(denda);
-            $('.id_pinjam').val(id);
-            $('.nomor_anggota').val(nomor_anggota);
-            $('.nama_siswa').val(nama_siswa);
-            $('.judul_buku').val(judul_buku);
-            $('.tanggal_pinjam').val(tanggal_pinjam);
-            $('.tanggal_harus_kembali').val(tanggal_harus_kembali);
-            $('.tanggal_kembali').val(tanggal_kembali);
-            $('.denda').val(denda);
-            $('#editModal').modal('show');
-        });
-
-        $('.btn-delete').on('click', function() {
-            const id = $(this).data('id');
-            $('.id_pinjam').val(id);
-            $('#deleteModal').modal('show');
-        });
-
-        // click select and with id=id_siswa
         $('.js-data-students').on('change', function() {
             const id_siswa = $(this).val();
             const url = '<?= route_to("api.student.getStudentById", "999999999") ?>';
@@ -282,7 +321,6 @@
             });
         });
 
-        // click select and with id=id_buku
         $('.js-data-books').on('change', function() {
             const id_buku = $(this).val();
             const url = '<?= route_to("api.book.getBookById", "999999999") ?>';
@@ -300,7 +338,6 @@
                 }
             });
         });
-
     });
 </script>
 <?= $this->endSection() ?>

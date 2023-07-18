@@ -290,35 +290,36 @@
 
 <?= $this->section('javascript') ?>
 <script>
-    $(document).ready(function() {
-        $('.btn-edit').on('click', function() {
-            const id_siswa = $(this).data('id-siswa');
-            const id_registrasi = $(this).data('id-registrasi');
-            const nama_siswa = $(this).data('nama-siswa');
-            const username = $(this).data('username');
-            const password = $(this).data('password');
-            const kelas = $(this).data('kelas');
-            const nisn = $(this).data('nisn');
-            const nomor_anggota = $(this).data('nomor-anggota');
-            const alamat = $(this).data('alamat');
-            const nomor_telepon = $(this).data('nomor-telepon');
-            $('.id_siswa').val(id_siswa);
-            $('.id_registrasi').val(id_registrasi);
-            $('.nama_siswa').val(nama_siswa);
-            $('.username').val(username);
-            $('.password').val(password);
-            $('.kelas').val(kelas);
-            $('.nisn').val(nisn);
-            $('.nomor_anggota').val(nomor_anggota);
-            $('.alamat').val(alamat);
-            $('.nomor_telepon').val(nomor_telepon);
-            $('#editModal').modal('show');
-        });
-        $('.btn-delete').on('click', function() {
-            const id = $(this).data('id');
-            $('.id_siswa').val(id);
-            $('#deleteModal').modal('show');
-        });
+    $(document).on('click', '.btn-edit', function(e) {
+        e.preventDefault();
+        const id_siswa = $(this).data('id-siswa');
+        const id_registrasi = $(this).data('id-registrasi');
+        const nama_siswa = $(this).data('nama-siswa');
+        const username = $(this).data('username');
+        const password = $(this).data('password');
+        const kelas = $(this).data('kelas');
+        const nisn = $(this).data('nisn');
+        const nomor_anggota = $(this).data('nomor-anggota');
+        const alamat = $(this).data('alamat');
+        const nomor_telepon = $(this).data('nomor-telepon');
+        $('.id_siswa').val(id_siswa);
+        $('.id_registrasi').val(id_registrasi);
+        $('.nama_siswa').val(nama_siswa);
+        $('.username').val(username);
+        $('.password').val(password);
+        $('.kelas').val(kelas);
+        $('.nisn').val(nisn);
+        $('.nomor_anggota').val(nomor_anggota);
+        $('.alamat').val(alamat);
+        $('.nomor_telepon').val(nomor_telepon);
+        $('#editModal').modal('show');
+    });
+
+    $(document).on('click', '.btn-delete', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        $('.id_siswa').val(id);
+        $('#deleteModal').modal('show');
     });
 </script>
 <?= $this->endSection() ?>

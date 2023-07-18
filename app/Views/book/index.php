@@ -34,11 +34,11 @@
                             <div class="card-header">
                                 <h4 class="card-title">Data Buku</h4>
                                 <?php
-                                
+
                                 if (session()->get('role') == 2) {
                                     echo '<button type="button" class="btn btn-success mt-1" data-toggle="modal" data-target="#addModal">Tambah Buku</button>';
                                 }
-                                
+
                                 ?>
                                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                 <div class="heading-elements">
@@ -68,7 +68,7 @@
                                                     <!-- <th>Kode Klasifikasi</th> -->
                                                     <th>Status</th>
                                                     <?php
-                                                    
+
                                                     if (session()->get('role') == 2) {
                                                         echo '<th>Action</th>';
                                                     }
@@ -80,15 +80,15 @@
                                                 <?php foreach ($data as $key => $value) { ?>
                                                     <tr>
                                                         <td style="text-align: center;vertical-align: middle;">
-                                                        <?php
-                                                        
-                                                        if ($value->gambar == null) {
-                                                            $value->gambar = 'default.jpg';
-                                                        }
+                                                            <?php
 
-                                                        ?>
-                                                        <img src="<?= base_url('images/books/' . $value->gambar) ?>" width="100px" height="100px">
-                                                    </td>
+                                                            if ($value->gambar == null) {
+                                                                $value->gambar = 'default.jpg';
+                                                            }
+
+                                                            ?>
+                                                            <img src="<?= base_url('images/books/' . $value->gambar) ?>" width="100px" height="100px">
+                                                        </td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->judul_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->kode_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->pengarang ?></td>
@@ -97,22 +97,16 @@
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->jumlah_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->jenis_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->rak ?></td>
-                                                        <td style="text-align: center;vertical-align: middle;">
-                                                            <?php if ($value->status_buku == 1) { ?>
-                                                                <span class="badge badge-success">Tersedia</span>
-                                                            <?php } else { ?>
-                                                                <span class="badge badge-danger">Tidak Tersedia</span>
-                                                            <?php } ?>
-                                                        </td>
+                                                        <td style="text-align: center;vertical-align: middle;"><?= $value->status_buku ?></td>
                                                         <?php
-                                                        
+
                                                         if (session()->get('role') == 2) {
                                                             echo '<td style="text-align: center;vertical-align: middle;">';
-                                                            echo '<a href="#" class="btn btn-warning btn-sm btn-edit" data-id-buku="' . $value->id_buku . '" data-judul-buku="' . $value->judul_buku . '" data-kode-buku="' . $value->kode_buku . '" data-pengarang="' . $value->pengarang . '" data-penerbit="' . $value->penerbit . '" data-tahun-terbit="' . $value->tahun_terbit . '" data-jumlah-buku="' . $value->jumlah_buku . '" data-jenis-buku="' . $value->jenis_buku . '" data-rak="' . $value->rak . '" data-kode-klasifikasi="' . $value->kode_klasifikasi . '" data-status-buku="' . $value->status_buku . '" data-gambar="' . $value->gambar . '">Edit</a>';
-                                                            echo '<a href="#" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-id="' . $value->id_buku . '" data-target="#deleteModal">Delete</a>';
+                                                            echo '<a href="#" class="btn btn-warning btn-sm btn-edit" data-id-buku="' . $value->id_buku . '" data-judul-buku="' . $value->judul_buku . '" data-kode-buku="' . $value->kode_buku . '" data-pengarang="' . $value->pengarang . '" data-penerbit="' . $value->penerbit . '" data-tahun-terbit="' . $value->tahun_terbit . '" data-jumlah-buku="' . $value->jumlah_buku . '" data-jenis-buku="' . $value->jenis_buku . '" data-rak="' . $value->rak . '" data-kode-klasifikasi="' . $value->kode_klasifikasi . '" data-status-buku="' . $value->status_buku . '" data-gambar="' . $value->gambar . '"><i class="ft-edit"></i></a>';
+                                                            echo '<a href="#" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-id="' . $value->id_buku . '" data-target="#deleteModal"><i class="ft-trash"></i></a>';
                                                             echo '</td>';
                                                         }
-                                                        
+
                                                         ?>
                                                     </tr>
                                                 <?php } ?>
@@ -131,11 +125,11 @@
                                                     <!-- <th>Kode Klasifikasi</th> -->
                                                     <th>Status</th>
                                                     <?php
-                                                    
+
                                                     if (session()->get('role') == 2) {
                                                         echo '<th>Action</th>';
                                                     }
-                                                    
+
                                                     ?>
                                                 </tr>
                                             </tfoot>
@@ -199,7 +193,7 @@
                         <input type="text" class="form-control" name="rak" placeholder="Rak" required>
                     </div>
                     <div class="form-group">
-                        <label>Status_buku</label>
+                        <label>Status Buku</label>
                         <input type="text" class="form-control" name="status_buku" placeholder="Status Buku" required>
                     </div>
                     <!-- <div class="form-group">
@@ -267,7 +261,7 @@
                         <input type="text" class="form-control rak" name="rak" placeholder="Rak" required>
                     </div>
                     <div class="form-group">
-                        <label>Status_buku</label>
+                        <label>Status Buku</label>
                         <input type="text" class="form-control status_buku" name="status_buku" placeholder="Status Buku" required>
                     </div>
                     <!-- <div class="form-group">
@@ -325,43 +319,45 @@
 
 <?= $this->section('javascript') ?>
 <script>
-    $(document).ready(function() {
-        $('.btn-edit').on('click', function() {
-            const id_buku = $(this).data('id-buku');
-            const kode_buku = $(this).data('kode-buku');
-            const judul_buku = $(this).data('judul-buku');
-            const pengarang = $(this).data('pengarang');
-            const penerbit = $(this).data('penerbit');
-            const tahun_terbit = $(this).data('tahun-terbit');
-            const jumlah_buku = $(this).data('jumlah-buku');
-            const jenis_buku = $(this).data('jenis-buku');
-            const rak = $(this).data('rak');
-            const status_buku = $(this).data('status-buku');
-            // const kode_klasifikasi = $(this).data('kode-klasifikasi');
-            const gambar = $(this).data('gambar');
-            console.log(gambar)
-            $('.id_buku').val(id_buku);
-            $('.kode_buku').val(kode_buku);
-            $('.judul_buku').val(judul_buku);
-            $('.pengarang').val(pengarang);
-            $('.penerbit').val(penerbit);
-            $('.tahun_terbit').val(tahun_terbit);
-            $('.jumlah_buku').val(jumlah_buku);
-            $('.jenis_buku').val(jenis_buku);
-            $('.rak').val(rak);
-            $('.status_buku').val(status_buku);
-            // $('.kode_klasifikasi').val(kode_klasifikasi);
-            $('.name_gambar').val(gambar);
-            $('#gambar').attr('src', '<?= base_url('images/books') ?>/' + gambar);
-            $('#editModal').modal('show');
-        });
-        $('.btn-delete').on('click', function() {
-            const id = $(this).data('id');
+    $(document).on('click', '.btn-edit', function(e) {
+        e.preventDefault();
+        const id_buku = $(this).data('id-buku');
+        const kode_buku = $(this).data('kode-buku');
+        const judul_buku = $(this).data('judul-buku');
+        const pengarang = $(this).data('pengarang');
+        const penerbit = $(this).data('penerbit');
+        const tahun_terbit = $(this).data('tahun-terbit');
+        const jumlah_buku = $(this).data('jumlah-buku');
+        const jenis_buku = $(this).data('jenis-buku');
+        const rak = $(this).data('rak');
+        const status_buku = $(this).data('status-buku');
+        // const kode_klasifikasi = $(this).data('kode-klasifikasi');
+        const gambar = $(this).data('gambar');
+        console.log(gambar)
+        $('.id_buku').val(id_buku);
+        $('.kode_buku').val(kode_buku);
+        $('.judul_buku').val(judul_buku);
+        $('.pengarang').val(pengarang);
+        $('.penerbit').val(penerbit);
+        $('.tahun_terbit').val(tahun_terbit);
+        $('.jumlah_buku').val(jumlah_buku);
+        $('.jenis_buku').val(jenis_buku);
+        $('.rak').val(rak);
+        $('.status_buku').val(status_buku);
+        // $('.kode_klasifikasi').val(kode_klasifikasi);
+        $('.name_gambar').val(gambar);
+        $('#gambar').attr('src', '<?= base_url('images/books') ?>/' + gambar);
+        $('#editModal').modal('show');
+    });
+
+    $(document).on('click', '.btn-delete', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
             const gambar = $(this).data('gambar');
             $('.id_buku').val(id);
             $('.name_gambar').val(gambar);
             $('#deleteModal').modal('show');
-        });
     });
+
 </script>
 <?= $this->endSection() ?>

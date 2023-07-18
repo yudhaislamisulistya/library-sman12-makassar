@@ -79,7 +79,7 @@
             ?>
                 <li class=" nav-item"><a href="<?= route_to('headmaster.dashboard') ?>"><i class="la la-home"></i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
                 </li>
-                <li class=" nav-item"><a href="<?= route_to('headmaster.loan') ?>"><i class="la la-bitcoin"></i><span class="menu-title" data-i18n="Kelola Peminjaman">Peminjaman</span></a>
+                <li class=" nav-item"><a href="<?= route_to('headmaster.loan') ?>"><i class="la la-bitcoin"></i><span class="menu-title" data-i18n="Kelola Peminjaman">Laporan Riwayat</span></a>
                 </li>
                 <li class=" nav-item"><a href="<?= route_to('auth.logout') ?>"><i class="la la-close"></i><span class="menu-title" data-i18n="Logout">Logout</span></a>
                 </li>

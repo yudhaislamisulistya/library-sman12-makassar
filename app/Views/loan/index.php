@@ -195,11 +195,11 @@
                                                     <th>Tanggal Harus Kembali</th>
                                                     <th>Status Pinjaman</th>
                                                     <?php
-                                                    
+
                                                     if (session()->get('role') == 2) {
                                                         echo '<th>Action</th>';
                                                     }
-                                                    
+
                                                     ?>
                                                 </tr>
                                             </tfoot>
@@ -247,18 +247,16 @@
 
 <?= $this->section('javascript') ?>
 <script>
+    $(document).on('click', '.btn-delete', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        $('.id_pinjam').val(id);
+        $('#deleteModal').modal('show');
+    });
     $(document).ready(function() {
 
         $('.js-data-students').select2();
         $('.js-data-books').select2();
-
-        $('.btn-delete').on('click', function() {
-            const id = $(this).data('id');
-            $('.id_pinjam').val(id);
-            $('#deleteModal').modal('show');
-        });
-
-        // click select and with id=id_siswa
         $('.js-data-students').on('change', function() {
             const id_siswa = $(this).val();
             const url = '<?= route_to("api.student.getStudentById", "999999999") ?>';
