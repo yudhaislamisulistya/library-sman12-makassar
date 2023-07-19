@@ -97,7 +97,21 @@
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->jumlah_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->jenis_buku ?></td>
                                                         <td style="text-align: center;vertical-align: middle;"><?= $value->rak ?></td>
-                                                        <td style="text-align: center;vertical-align: middle;"><?= $value->status_buku ?></td>
+                                                        <td style="text-align: center;vertical-align: middle;">
+                                                            <?php
+
+                                                            if ($value->status_buku == "Tersedia - Bisa Dipinjam") {
+                                                                echo '<span class="badge badge-success">Tersedia - Bisa Dipinjam</span>';
+                                                            } else if ($value->status_buku == "Tersedia - Tidak Bisa Dipinjam") {
+                                                                echo '<span class="badge badge-warning">Tersedia - Tidak Bisa Dipinjam</span>';
+                                                            } else if ($value->status_buku == "Tidak Tersedia") {
+                                                                echo '<span class="badge badge-danger">Tidak Tersedia</span>';
+                                                            } else {
+                                                                echo '<span class="badge badge-secondary">Lainnya</span>';
+                                                            }
+
+                                                            ?>
+                                                        </td>
                                                         <?php
 
                                                         if (session()->get('role') == 2) {
@@ -194,7 +208,11 @@
                     </div>
                     <div class="form-group">
                         <label>Status Buku</label>
-                        <input type="text" class="form-control" name="status_buku" placeholder="Status Buku" required>
+                        <select class="form-control" name="status_buku" id="status_buku" require>
+                            <option value="Tersedia - Bisa Dipinjam">Tersedia - Bisa Dipinjam</option>
+                            <option value="Tersedia - Tidak Bisa Dipinjam">Tersedia - Tidak Bisa Dipinjam</option>
+                            <option value="Tidak Tersedia">Tidak Tersedia</option>
+                        </select>
                     </div>
                     <!-- <div class="form-group">
                         <label>Kode Klasifikasi</label>
@@ -262,7 +280,11 @@
                     </div>
                     <div class="form-group">
                         <label>Status Buku</label>
-                        <input type="text" class="form-control status_buku" name="status_buku" placeholder="Status Buku" required>
+                        <select class="form-control status_buku" name="status_buku" id="status_buku" require>
+                            <option value="Tersedia - Bisa Dipinjam">Tersedia - Bisa Dipinjam</option>
+                            <option value="Tersedia - Tidak Bisa Dipinjam">Tersedia - Tidak Bisa Dipinjam</option>
+                            <option value="Tidak Tersedia">Tidak Tersedia</option>
+                        </select>
                     </div>
                     <!-- <div class="form-group">
                         <label>Kode Klasifikasi</label>
@@ -353,11 +375,10 @@
     $(document).on('click', '.btn-delete', function(e) {
         e.preventDefault();
         const id = $(this).data('id');
-            const gambar = $(this).data('gambar');
-            $('.id_buku').val(id);
-            $('.name_gambar').val(gambar);
-            $('#deleteModal').modal('show');
+        const gambar = $(this).data('gambar');
+        $('.id_buku').val(id);
+        $('.name_gambar').val(gambar);
+        $('#deleteModal').modal('show');
     });
-
 </script>
 <?= $this->endSection() ?>

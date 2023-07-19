@@ -128,9 +128,21 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <div class="col-md-2">
                                                     <?php
                                                     $year = substr(date('Y'), 2, 2);
-                                                    $lastNumberMember = substr(getLastNumberMember(), 2, 4);
-                                                    $lastNumberMember = str_pad($lastNumberMember + 1, 4, '0', STR_PAD_LEFT);
+
+                                                    // Mendapatkan nilai dari getLastNumberMember() atau set ke 0 jika bernilai null
+                                                    $lastNumberMember = getLastNumberMember();
+
+                                                    if ($lastNumberMember == 0) {
+                                                        $lastNumberMember = 0;
+                                                    } else {
+                                                        $lastNumberMember = substr($lastNumberMember, 2, 4);
+                                                    }
+                                                    
+
+
+                                                    $lastNumberMember = str_pad((int)$lastNumberMember + 1, 4, '0', STR_PAD_LEFT);
                                                     ?>
+
                                                     <div class="form-group">
                                                         <label>Nomor</label>
                                                         <input type="text" class="form-control" value="<?= $year ?>" readonly>
