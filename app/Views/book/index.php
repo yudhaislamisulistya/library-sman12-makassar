@@ -53,7 +53,16 @@
                             <div class="card-content collapse show">
                                 <div class="card-body card-dashboard">
                                     <div class="table-responsive">
-                                        <table id="datatable-book" class="table table-striped table-bordered">
+                                        <?php
+                                        
+                                        // check role
+                                        if (session()->get('role') == 1) {
+                                            echo '<table class="table table-striped table-bordered zero-configuration">';
+                                        } else {
+                                            echo '<table id="datatable-book" class="table table-striped table-bordered">';
+                                        }
+                                        
+                                        ?>
                                             <thead>
                                                 <tr>
                                                     <th>Gambar</th>

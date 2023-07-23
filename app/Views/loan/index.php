@@ -128,81 +128,90 @@
                             <div class="card-content collapse show">
                                 <div class="card-body card-dashboard">
                                     <div class="table-responsive">
-                                        <table id="datatable-loan" class="table table-striped table-bordered">
-                                            <thead>
+                                        <?php
+
+                                        // check role
+                                        if (session()->get('role') == 1) {
+                                            echo '<table class="table table-striped table-bordered zero-configuration">';
+                                        } else {
+                                            echo '<table id="datatable-loan" class="table table-striped table-bordered">';
+                                        }
+
+                                        ?>
+                                        <thead>
+                                            <tr>
+                                                <th>Gambar</th>
+                                                <th>Judul Buku</th>
+                                                <th>Staff</th>
+                                                <th>Siswa</th>
+                                                <th>Tanggal Pinjam</th>
+                                                <th>Tanggal Harus Kembali</th>
+                                                <th>Status Pinjaman</th>
+                                                <?php
+
+                                                if (session()->get('role') == 2) {
+                                                    echo '<th>Action</th>';
+                                                }
+
+                                                ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($data_loans as $key => $value) : ?>
                                                 <tr>
-                                                    <th>Gambar</th>
-                                                    <th>Judul Buku</th>
-                                                    <th>Staff</th>
-                                                    <th>Siswa</th>
-                                                    <th>Tanggal Pinjam</th>
-                                                    <th>Tanggal Harus Kembali</th>
-                                                    <th>Status Pinjaman</th>
-                                                    <?php
-
-                                                    if (session()->get('role') == 2) {
-                                                        echo '<th>Action</th>';
-                                                    }
-
-                                                    ?>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($data_loans as $key => $value) : ?>
-                                                    <tr>
-                                                        <td>
-                                                            <?php
-
-                                                            if ($value->gambar == null) {
-                                                                $value->gambar = 'default.jpg';
-                                                            }
-
-                                                            ?>
-                                                            <img src="<?= base_url('images/books/' . $value->gambar) ?>" width="100px" height="100px">
-                                                        </td>
-                                                        <td><?= $value->judul_buku ?></td>
-                                                        <td><?= $value->nama_staff ?></td>
-                                                        <td><?= $value->nama_siswa ?></td>
-                                                        <td><?= $value->tanggal_pinjam ?></td>
-                                                        <td><?= $value->tanggal_harus_kembali ?></td>
-                                                        <td>
-                                                            <?php if ($value->status == 1) : ?>
-                                                                <span class="badge badge-warning">Belum Dikembalikan</span>
-                                                            <?php elseif ($value->status == 2) : ?>
-                                                                <span class="badge badge-success">Sudah Dikembalikan</span>
-                                                            <?php endif; ?>
-                                                        </td>
+                                                    <td>
                                                         <?php
 
-                                                        if (session()->get('role') == 2) {
-                                                            echo '<td>
-                                                                    <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="' . $value->id_pinjam . '">Delete</a>
-                                                                </td>';
+                                                        if ($value->gambar == null) {
+                                                            $value->gambar = 'default.jpg';
                                                         }
 
                                                         ?>
-
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Gambar</th>
-                                                    <th>Judul Buku</th>
-                                                    <th>Staff</th>
-                                                    <th>Siswa</th>
-                                                    <th>Tanggal Pinjam</th>
-                                                    <th>Tanggal Harus Kembali</th>
-                                                    <th>Status Pinjaman</th>
+                                                        <img src="<?= base_url('images/books/' . $value->gambar) ?>" width="100px" height="100px">
+                                                    </td>
+                                                    <td><?= $value->judul_buku ?></td>
+                                                    <td><?= $value->nama_staff ?></td>
+                                                    <td><?= $value->nama_siswa ?></td>
+                                                    <td><?= $value->tanggal_pinjam ?></td>
+                                                    <td><?= $value->tanggal_harus_kembali ?></td>
+                                                    <td>
+                                                        <?php if ($value->status == 1) : ?>
+                                                            <span class="badge badge-warning">Belum Dikembalikan</span>
+                                                        <?php elseif ($value->status == 2) : ?>
+                                                            <span class="badge badge-success">Sudah Dikembalikan</span>
+                                                        <?php endif; ?>
+                                                    </td>
                                                     <?php
 
                                                     if (session()->get('role') == 2) {
-                                                        echo '<th>Action</th>';
+                                                        echo '<td>
+                                                                    <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="' . $value->id_pinjam . '">Delete</a>
+                                                                </td>';
                                                     }
 
                                                     ?>
+
                                                 </tr>
-                                            </tfoot>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Gambar</th>
+                                                <th>Judul Buku</th>
+                                                <th>Staff</th>
+                                                <th>Siswa</th>
+                                                <th>Tanggal Pinjam</th>
+                                                <th>Tanggal Harus Kembali</th>
+                                                <th>Status Pinjaman</th>
+                                                <?php
+
+                                                if (session()->get('role') == 2) {
+                                                    echo '<th>Action</th>';
+                                                }
+
+                                                ?>
+                                            </tr>
+                                        </tfoot>
                                         </table>
                                     </div>
                                 </div>

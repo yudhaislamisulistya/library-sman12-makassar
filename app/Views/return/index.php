@@ -46,105 +46,114 @@
                             <div class="card-content collapse show">
                                 <div class="card-body card-dashboard">
                                     <div class="table-responsive">
-                                        <table id="datatable-return" class="table table-striped table-bordered">
-                                            <thead>
+                                        <?php
+
+                                        // check role
+                                        if (session()->get('role') == 1) {
+                                            echo '<table class="table table-striped table-bordered zero-configuration">';
+                                        } else {
+                                            echo '<table id="datatable-return" class="table table-striped table-bordered">';
+                                        }
+
+                                        ?>
+                                        <thead>
+                                            <tr>
+                                                <th>Nomor Anggota</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Judul Buku</th>
+                                                <th>Tanggal Pinjam</th>
+                                                <th>Tanggal Harus Kembali</th>
+                                                <th>Tanggal Kembali</th>
+                                                <th>Denda</th>
+                                                <?php
+
+                                                if (session()->get('role') == 2) {
+                                                    echo '<th>Action</th>';
+                                                }
+
+                                                ?>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($data_returns as $data_return) : ?>
                                                 <tr>
-                                                    <th>Nomor Anggota</th>
-                                                    <th>Nama Siswa</th>
-                                                    <th>Judul Buku</th>
-                                                    <th>Tanggal Pinjam</th>
-                                                    <th>Tanggal Harus Kembali</th>
-                                                    <th>Tanggal Kembali</th>
-                                                    <th>Denda</th>
+                                                    <td><?= $data_return->nomor_anggota ?></td>
+                                                    <td><?= $data_return->nama_siswa ?></td>
+                                                    <td><?= $data_return->judul_buku ?></td>
+                                                    <td><?= $data_return->tanggal_pinjam ?></td>
+                                                    <td><?= $data_return->tanggal_harus_kembali ?></td>
+                                                    <td>
+                                                        <?php
+
+                                                        if ($data_return->tanggal_kembali == null) {
+                                                            echo "- (Silahkan Set Pengembalian Buku)";
+                                                        } else {
+                                                            echo $data_return->tanggal_kembali;
+                                                        }
+
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        $today = date('Y-m-d');
+                                                        $due_date = $data_return->tanggal_harus_kembali;
+                                                        $denda = 0;
+
+                                                        $tanggal_kembali = $data_return->tanggal_kembali;
+
+                                                        if ($tanggal_kembali != null) {
+                                                            if ($tanggal_kembali > $due_date) {
+                                                                $datetime1_new = new DateTime($tanggal_kembali);
+                                                                $datetime2_new = new DateTime($due_date);
+                                                                $interval = $datetime1_new->diff($datetime2_new);
+                                                                $denda = $interval->format('%a') * 1000;
+                                                                $denda = "Rp. " . number_format($denda, 0, ',', '.');
+                                                            } else if ($tanggal_kembali > $due_date) {
+                                                                $denda = 0;
+                                                            }
+                                                        } else {
+                                                            if ($today > $due_date) {
+                                                                $datetime1 = new DateTime($today);
+                                                                $datetime2 = new DateTime($due_date);
+                                                                $interval = $datetime1->diff($datetime2);
+                                                                $denda = $interval->format('%a') * 1000;
+                                                                $denda = "Rp. " . number_format($denda, 0, ',', '.');
+                                                            }
+                                                        }
+
+                                                        echo $denda;
+                                                        ?>
+                                                    </td>
                                                     <?php
 
                                                     if (session()->get('role') == 2) {
-                                                        echo '<th>Action</th>';
-                                                    }
-
-                                                    ?>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($data_returns as $data_return) : ?>
-                                                    <tr>
-                                                        <td><?= $data_return->nomor_anggota ?></td>
-                                                        <td><?= $data_return->nama_siswa ?></td>
-                                                        <td><?= $data_return->judul_buku ?></td>
-                                                        <td><?= $data_return->tanggal_pinjam ?></td>
-                                                        <td><?= $data_return->tanggal_harus_kembali ?></td>
-                                                        <td>
-                                                            <?php
-
-                                                            if ($data_return->tanggal_kembali == null) {
-                                                                echo "- (Silahkan Set Pengembalian Buku)";
-                                                            } else {
-                                                                echo $data_return->tanggal_kembali;
-                                                            }
-
-                                                            ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php
-                                                            $today = date('Y-m-d');
-                                                            $due_date = $data_return->tanggal_harus_kembali;
-                                                            $denda = 0;
-
-                                                            $tanggal_kembali = $data_return->tanggal_kembali;
-
-                                                            if ($tanggal_kembali != null) {
-                                                                if ($tanggal_kembali > $due_date) {
-                                                                    $datetime1_new = new DateTime($tanggal_kembali);
-                                                                    $datetime2_new = new DateTime($due_date);
-                                                                    $interval = $datetime1_new->diff($datetime2_new);
-                                                                    $denda = $interval->format('%a') * 1000;
-                                                                    $denda = "Rp. " . number_format($denda, 0, ',', '.');
-                                                                } else if ($tanggal_kembali > $due_date) {
-                                                                    $denda = 0;
-                                                                }
-                                                            } else {
-                                                                if ($today > $due_date) {
-                                                                    $datetime1 = new DateTime($today);
-                                                                    $datetime2 = new DateTime($due_date);
-                                                                    $interval = $datetime1->diff($datetime2);
-                                                                    $denda = $interval->format('%a') * 1000;
-                                                                    $denda = "Rp. " . number_format($denda, 0, ',', '.');
-                                                                }
-                                                            }
-
-                                                            echo $denda;
-                                                            ?>
-                                                        </td>
-                                                        <?php
-
-                                                        if (session()->get('role') == 2) {
-                                                            echo '<td>
+                                                        echo '<td>
                                                             <a href="#" class="btn btn-warning btn-sm btn-edit" data-id="' . $data_return->id_pinjam . '" data-nomor-anggota="' . $data_return->nomor_anggota . '" data-nama-siswa="' . $data_return->nama_siswa . '" data-judul-buku="' . $data_return->judul_buku . '" data-tanggal-pinjam="' . $data_return->tanggal_pinjam . '" data-tanggal-harus-kembali="' . $data_return->tanggal_harus_kembali . '" data-tanggal-kembali="' . $data_return->tanggal_kembali . '" data-denda="' . $denda . '"><i class="ft-edit"></i></a>
                                                             <button class="btn btn-danger btn-sm btn-delete" data-id="' . $data_return->id_pinjam . '" data-toggle="modal" data-target="#deleteModal"><i class="ft-trash"></i></button>
                                                         </td>';
-                                                        }
-                                                        ?>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Nomor Anggota</th>
-                                                    <th>Nama Siswa</th>
-                                                    <th>Judul Buku</th>
-                                                    <th>Tanggal Pinjam</th>
-                                                    <th>Tanggal Harus Kembali</th>
-                                                    <th>Tanggal Kembali</th>
-                                                    <th>Denda</th>
-                                                    <?php
-
-                                                    if (session()->get('role') == 2) {
-                                                        echo '<th>Action</th>';
                                                     }
-
                                                     ?>
                                                 </tr>
-                                            </tfoot>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Nomor Anggota</th>
+                                                <th>Nama Siswa</th>
+                                                <th>Judul Buku</th>
+                                                <th>Tanggal Pinjam</th>
+                                                <th>Tanggal Harus Kembali</th>
+                                                <th>Tanggal Kembali</th>
+                                                <th>Denda</th>
+                                                <?php
+
+                                                if (session()->get('role') == 2) {
+                                                    echo '<th>Action</th>';
+                                                }
+
+                                                ?>
+                                            </tr>
+                                        </tfoot>
                                         </table>
                                     </div>
                                 </div>

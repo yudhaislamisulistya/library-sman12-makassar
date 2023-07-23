@@ -140,7 +140,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                         <div class="table-responsive">
-                                            <table id="datatable-return" class="table table-striped table-bordered">
+                                            <table class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th>Nomor Anggota</th>
