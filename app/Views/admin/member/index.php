@@ -47,7 +47,7 @@
                             <div class="card-content collapse show">
                                 <div class="card-body card-dashboard">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered zero-configuration">
+                                        <table id="datatable-member" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>Nomor</th>
@@ -162,7 +162,7 @@
                         <div class="col-md-10">
                             <div class="form-group">
                                 <label>Anggota</label>
-                                <input type="text" class="form-control" name="nomor_anggota" placeholder="Nomor Telepon" required>
+                                <input type="text" class="form-control" name="nomor_anggota" placeholder="Nomor Anggota" required>
                             </div>
                         </div>
                     </div>
@@ -235,7 +235,7 @@
                     </div>
                     <div class="form-group">
                         <label>Nomor Anggota</label>
-                        <input type="text" class="form-control nomor_anggota" name="nomor_anggota" placeholder="Nomor Telepon" required>
+                        <input type="text" class="form-control nomor_anggota" name="nomor_anggota" placeholder="Nomor Anggota" required>
                     </div>
                     <div class="form-group">
                         <label>Alamat</label>
@@ -320,6 +320,75 @@
         const id = $(this).data('id');
         $('.id_siswa').val(id);
         $('#deleteModal').modal('show');
+    });
+
+    $(document).ready(function() {
+        $('#datatable-member').DataTable({
+            dom: 'Blfrtip',
+            buttons: {
+                dom: {
+                    button: {
+                        className: 'btn btn-info mr-1' //Primary class for all buttons
+                    }
+                },
+                buttons: [{
+                        extend: 'copyHtml5',
+                        title: 'Data Export Data Anggota <?php echo date('d-m-Y H:i:s'); ?>',
+                        text: '<i class="fa fa-copy"></i> Copy',
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        title: 'Data Export Data Anggota <?php echo date('d-m-Y H:i:s'); ?>',
+                        text: '<i class="fa fa-file-excel-o"></i> Excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        },
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        title: 'Data Export Data Anggota <?php echo date('d-m-Y H:i:s'); ?>',
+                        text: '<i class="fa fa-file-text-o"></i> CSV',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        },
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: 'Data Export Data Anggota <?php echo date('d-m-Y H:i:s'); ?>',
+                        text: '<i class="fa fa-file-pdf-o"></i> PDF',
+                        customize: function(doc) {
+                            doc.defaultStyle.fontSize = 10;
+                            doc.pagePadding = [10, 10, 10, 10];
+                            doc.styles.tableHeader.fontSize = 10;
+                            doc.styles.title.fontSize = 12;
+                            doc.styles.title.alignment = 'center';
+                        },
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        },
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Data Export Data Anggota <?php echo date('d-m-Y H:i:s'); ?>',
+                        text: '<i class="fa fa-print"></i> Print',
+                        pageSize: 'A4',
+                        customize: function(win) {
+                            $(win.document.body).css('font-size', '10pt');
+                            $(win.document.body).find('table').addClass('compact').css('font-size', 'inherit');
+                            // title center
+                            $(win.document.body).find('h1').css('text-align', 'center');
+                            // add margin page all side
+                            $(win.document.body).css('margin', '10px');
+                            // remove default page two printing
+
+                        },
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        },
+                    }
+                ]
+            }
+        });
     });
 </script>
 <?= $this->endSection() ?>

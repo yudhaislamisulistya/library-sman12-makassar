@@ -15,8 +15,19 @@
                     <ul class="nav navbar-nav mr-auto float-left">
                         <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li>
                     </ul>
+                    <?php
+                    $photo = "";
+                    if(session()->get('role') == 1){
+                        $photo = getPhotoUserById(session()->get('id_user'));
+                    }else if(session()->get('role') == 2){
+                        $photo = getPhotoUserById(session()->get('id_user'));
+                    }else if(session()->get('role') == 3){
+                        $photo = getPhotoUserById(session()->get('id_user'));
+                    }
+                    
+                    ?>
                     <ul class="nav navbar-nav float-right">
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700"><?= getNameUserById(session()->get('id_user'))?></span><span class="avatar avatar-online"><img src="<?= base_url() ?>/images/avatar-s-19.png" alt="avatar"><i></i></span></a>
+                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700"><?= getNameUserById(session()->get('id_user'))?></span><span class="avatar avatar-online"><img src="<?= base_url() ?>/images/profile/<?=$photo?>" alt="avatar"><i></i></span></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="<?= route_to('profile') ?>"><i class="ft-user"></i> Edit Profile</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href="<?= route_to('auth.logout') ?>"><i class="ft-power"></i> Logout</a>

@@ -14,7 +14,7 @@ class RegistrationModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_registrasi', 'id_siswa', 'tanggal_daftar','kelas', 'nisn', 'nomor_anggota', 'alamat', 'nomor_telepon'
+        'id_registrasi', 'id_siswa', 'tanggal_daftar','kelas', 'nisn', 'nomor_anggota', 'alamat', 'nomor_telepon', 'photo'
     ];
 
     // Dates

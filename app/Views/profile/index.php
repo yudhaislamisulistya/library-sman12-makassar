@@ -48,7 +48,7 @@
                                     <?php
 
                                     if (session()->get('role') == 1) { ?>
-                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5">
+                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Nama Siswa</label>
                                                 <input type="text" class="form-control" name="nama_siswa" placeholder="Nama Siswa" pattern="[A-Za-z\s]+" title="Hanya diperbolehkan inputan teks" value="<?= $data->nama_siswa ?>" required>
@@ -106,6 +106,21 @@
                                                 <label>Nomor Telepon</label>
                                                 <input type="text" class="form-control" name="nomor_telepon" value="<?= $data->nomor_telepon ?>" placeholder="Nomor Telepon" required>
                                             </div>
+                                            <div class="form-group">
+                                                <label>Photo</label>
+                                                <input type="file" class="form-control mb-2" name="photo" placeholder="Photo">
+                                                <?php
+                                                
+                                                $photo = $data->photo;
+                                                if ($photo != null) {
+                                                    echo '<img class="rounded" src="' . base_url('images/profile/' . $photo) . '" width="100px" height="100px">';
+                                                }else {
+                                                    echo '<img class="rounded" src="' . base_url('images/books/default.jpg') . '" width="100px" height="100px">';
+                                                }
+                                                
+                                                ?>
+                                                <input type="hidden" name="old_photo" value="<?= $data->photo ?>">
+                                            </div>
                                             <button type="submit" class="btn btn-primary">Change Profile</button>
                                         </form>
                                         <form action="<?= route_to('profile.changePassword') ?>" method="post">
@@ -120,7 +135,7 @@
                                             <button type="submit" class="btn btn-primary">Change Password</button>
                                         </form>
                                     <?php } elseif (session()->get('role') == 2) { ?>
-                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5">
+                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Nama Staff</label>
                                                 <input type="text" class="form-control" name="nama_staff" placeholder="Nama Staff" pattern="[A-Za-z\s]+" title="Hanya diperbolehkan inputan teks" value="<?= $data['nama_staff'] ?>" required>
@@ -128,6 +143,22 @@
                                             <div class="form-group">
                                                 <label>Username</label>
                                                 <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $data['username'] ?>" required readonly>
+                                            </div>
+                                            <!-- make photo upload -->
+                                            <div class="form-group">
+                                                <label>Photo</label>
+                                                <input type="file" class="form-control mb-2" name="photo" placeholder="Photo">
+                                                <?php
+                                                
+                                                $photo = $data['photo'];
+                                                if ($photo != null) {
+                                                    echo '<img class="rounded" src="' . base_url('images/profile/' . $photo) . '" width="100px" height="100px">';
+                                                }else {
+                                                    echo '<img class="rounded" src="' . base_url('images/books/default.jpg') . '" width="100px" height="100px">';
+                                                }
+                                                
+                                                ?>
+                                                <input type="hidden" name="old_photo" value="<?= $data['photo'] ?>">
                                             </div>
                                             <button type="submit" class="btn btn-primary">Change Profile</button>
                                         </form>
@@ -143,7 +174,7 @@
                                             <button type="submit" class="btn btn-primary">Change Password</button>
                                         </form>
                                     <?php } elseif (session()->get('role') == 3) { ?>
-                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5">
+                                        <form action="<?= route_to('profile.update') ?>" method="post" class="mb-5" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label>Nama Kepala Sekolah</label>
                                                 <input type="text" class="form-control" name="nama_kepala_sekolah" placeholder="Nama Kepala Sekolah" pattern="[A-Za-z\s]+" title="Hanya diperbolehkan inputan teks" value="<?= $data['nama_kepala_sekolah'] ?>" required>
@@ -151,6 +182,21 @@
                                             <div class="form-group">
                                                 <label>Username</label>
                                                 <input type="text" class="form-control" name="username" placeholder="Username" value="<?= $data['username'] ?>" required readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Photo</label>
+                                                <input type="file" class="form-control mb-2" name="photo" placeholder="Photo">
+                                                <?php
+                                                
+                                                $photo = $data['photo'];
+                                                if ($photo != null) {
+                                                    echo '<img class="rounded" src="' . base_url('images/profile/' . $photo) . '" width="100px" height="100px">';
+                                                }else {
+                                                    echo '<img class="rounded" src="' . base_url('images/books/default.jpg') . '" width="100px" height="100px">';
+                                                }
+                                                
+                                                ?>
+                                                <input type="hidden" name="old_photo" value="<?= $data['photo'] ?>">
                                             </div>
                                             <button type="submit" class="btn btn-primary">Change Profile</button>
                                         </form>

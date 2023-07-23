@@ -36,6 +36,25 @@ function getNameUserById($id)
     }
 }
 
+function getPhotoUserById($id)
+{
+    $registrationModel = new RegistrationModel();
+    $staffModel = new StaffModel();
+    $headmasterModel = new HeadmasterModel();
+    $student = $registrationModel->select('photo')->where('id_siswa', $id)->first();
+    $staff = $staffModel->select('photo')->where('id_staff', $id)->first();
+    $headmaster = $headmasterModel->select('photo')->where('id_kepala_sekolah', $id)->first();
+    if ($student != NULL) {
+        return $student['photo'];
+    } else if ($staff != NULL) {
+        return $staff['photo'];
+    } else if ($headmaster != NULL) {
+        return $headmaster['photo'];
+    } else {
+        return null;
+    }
+}
+
 function getBooks()
 {
     $bookModel = new BookModel();
@@ -135,4 +154,22 @@ function getLoansTotalReturnGroupByYear()
 
     array_multisort(array_column($loans, 'tahun'), SORT_ASC, $loans);
     return $loans;
+}
+
+function getBookByDate($year_now){
+    $bookModel = new BookModel();
+    $result = $bookModel->getBookByDate($year_now);
+    return $result;
+}
+
+function getLoanByDate($year_now){
+    $loanModel = new LoanModel();
+    $result = $loanModel->getLoanByDate($year_now);
+    return $result;
+}
+
+function getReturnByDate($year_now){
+    $returnModel = new LoanModel();
+    $result = $returnModel->getReturnByDate($year_now);
+    return $result;
 }

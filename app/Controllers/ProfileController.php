@@ -44,13 +44,27 @@ class ProfileController extends BaseController
             $id_user = session()->get('id_user');
             $id_registrasi = getRegistrationByIdUser($id_user)['id_registrasi'];
             if (session()->get('role') == 1) {
+                // check photo
+                $photo = $this->request->getFile('photo');
+                if ($photo->getFilename() == '') {
+                    $nama_photo = $this->request->getVar('old_photo');
+                } else {
+                    $nama_photo = $photo->getRandomName();
+                    $photo->move('images/profile', $nama_photo);
+                    // if ($this->request->getVar('old_photo') != 'default.png') {
+                    //     unlink('assets/img/profile/' . $this->request->getVar('old_photo'));
+                    // }
+                }
                 $data_registration = [
                     'nisn' => $this->request->getVar('nisn'),
                     'kelas' => $this->request->getVar('kelas'),
                     'nomor_anggota' => $this->request->getVar('nomor_anggota'),
                     'alamat' => $this->request->getVar('alamat'),
                     'nomor_telepon' => $this->request->getVar('nomor_telepon'),
+                    'photo' => $nama_photo,
                 ];
+
+
 
                 $data_student = [
                     'nama_siswa' => $this->request->getVar('nama_siswa'),
@@ -62,21 +76,51 @@ class ProfileController extends BaseController
                 return redirect()->back()->with('status', 'success');
             } elseif (session()->get('role') == 2) {
 
+                // check photo
+                $photo = $this->request->getFile('photo');
+                if ($photo->getFilename() == '') {
+                    $nama_photo = $this->request->getVar('old_photo');
+                } else {
+                    $nama_photo = $photo->getRandomName();
+                    $photo->move('images/profile', $nama_photo);
+                    // if ($this->request->getVar('old_photo') != 'default.png') {
+                    //     unlink('assets/img/profile/' . $this->request->getVar('old_photo'));
+                    // }
+                }
+
+
+
                 $data = [
                     'nama_staff' => $this->request->getVar('nama_staff'),
+                    'photo' => $nama_photo,
                 ];
 
                 $this->staffModel->update($id_user, $data);
                 return redirect()->back()->with('status', 'success');
             } elseif (session()->get('role') == 3) {
+                // check photo
+                $photo = $this->request->getFile('photo');
+                if ($photo->getFilename() == '') {
+                    $nama_photo = $this->request->getVar('old_photo');
+                } else {
+                    $nama_photo = $photo->getRandomName();
+                    $photo->move('images/profile', $nama_photo);
+                    // if ($this->request->getVar('old_photo') != 'default.png') {
+                    //     unlink('assets/img/profile/' . $this->request->getVar('old_photo'));
+                    // }
+                }
+
                 $data = [
                     'nama_kepala_sekolah' => $this->request->getVar('nama_kepala_sekolah'),
+                    'photo' => $nama_photo,
                 ];
 
                 $this->headmasterModel->update($id_user, $data);
                 return redirect()->back()->with('status', 'success');
             }
         } catch (\Exception $th) {
+            var_dump($th);
+            die();
             return redirect()->back()->with('status', 'failed');
         }
     }

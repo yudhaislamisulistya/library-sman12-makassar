@@ -14,7 +14,7 @@ class StaffModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_staff', 'nama_staff', 'username', 'password'
+        'id_staff', 'nama_staff', 'username', 'password', 'photo'
     ];
 
     // Dates

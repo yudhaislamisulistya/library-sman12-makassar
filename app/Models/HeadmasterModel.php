@@ -14,7 +14,7 @@ class HeadmasterModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'id_kepala_sekolah', 'nama_kepala_sekolah', 'username', 'password'
+        'id_kepala_sekolah', 'nama_kepala_sekolah', 'username', 'password', 'photo'
     ];
 
     // Dates
