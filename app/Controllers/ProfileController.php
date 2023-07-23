@@ -42,8 +42,9 @@ class ProfileController extends BaseController
     {
         try {
             $id_user = session()->get('id_user');
-            $id_registrasi = getRegistrationByIdUser($id_user)['id_registrasi'];
+
             if (session()->get('role') == 1) {
+                $id_registrasi = getRegistrationByIdUser($id_user)['id_registrasi'];
                 // check photo
                 $photo = $this->request->getFile('photo');
                 if ($photo->getFilename() == '') {

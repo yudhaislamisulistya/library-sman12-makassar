@@ -32,7 +32,7 @@
                             $photo = "images/profile/" . getPhotoUserById(session()->get('id_user'));
                         }
                     }else if(session()->get('role') == 3){
-                        $photo = "images/profile/" . getPhotoUserById(session()->get('id_user'));
+                        $photo = getPhotoUserById(session()->get('id_user'));
                         if($photo == null){
                             $photo = "images/books/default.jpg";
                         }else{
