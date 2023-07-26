@@ -9,10 +9,13 @@ class ReturnController extends BaseController
 {
     protected $loanModel;
 
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->loanModel = new LoanModel();
     }
+
+    // Berfungsi untuk menampilkan halaman dashboard kemudian menampilkan data peminjaman
     public function index()
     {
         // check if role is admin
@@ -26,6 +29,7 @@ class ReturnController extends BaseController
         return view('return/index', compact('data_returns'));
     }
 
+    // Berfungsi untuk menghapus data peminjaman
     public function delete()
     {
         try {
@@ -37,6 +41,7 @@ class ReturnController extends BaseController
         }
     }
 
+    // Berfungsi untuk memperbarui data peminjaman
     public function update()
     {
         try {

@@ -8,14 +8,18 @@ use App\Models\AuthModel;
 class AuthController extends BaseController
 {
     protected $authModel;
+
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->authModel = new AuthModel();
     }
+
+    // Berfungsi untuk menampilkan halaman login dan memeriksa apakah user sudah login atau belum
+    // jika sudah akan diarahkan ke halaman dashboard sesuai dengan role user
     public function login()
     {
         if (cekUser()) {
-            // if check session role user
             if (session()->get('role') == 1) {
                 return redirect()->to(base_url('student/dashboard'));
             } else if (session()->get('role') == 2) {
@@ -28,11 +32,13 @@ class AuthController extends BaseController
         return view('authentication/login');
     }
 
+    // Berfungsi untuk menampilkan halaman register
     public function register()
     {
         return view('authentication/register');
     }
 
+    // Berfungsi untuk menyimpan data user baru ke database 
     public function postLogin()
     {
         $username = $this->request->getPost('username');
@@ -59,12 +65,14 @@ class AuthController extends BaseController
         }
     }
 
+    // Berfungsi untuk logout dan menghapus session
     public function logout()
     {
         $this->resetSession();
         return redirect()->to(base_url('auth/login'));
     }
 
+    // Berfungsi untuk set session dengan data user yang login
     public function setSession($data)
     {
         $session = [

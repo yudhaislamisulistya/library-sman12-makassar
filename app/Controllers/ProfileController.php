@@ -17,6 +17,7 @@ class ProfileController extends BaseController
     protected $registrationModel;
     protected $loginModel;
 
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->staffModel = new StaffModel();
@@ -26,6 +27,7 @@ class ProfileController extends BaseController
         $this->loginModel = new LoginModel();
     }
 
+    // Berfungsi untuk menampilkan halaman profile/index kemudian mengirimkan data sesuai dengan role user
     public function index()
     {
         if (session()->get('role') == 1) {
@@ -38,6 +40,7 @@ class ProfileController extends BaseController
         return view('profile/index', compact('data'));
     }
 
+    // berfungsi memperbarui data profile user
     public function update()
     {
         try {
@@ -126,6 +129,7 @@ class ProfileController extends BaseController
         }
     }
 
+    // berfungsi memperbarui password user
     public function changePassword()
     {
         try {

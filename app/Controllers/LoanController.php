@@ -12,7 +12,7 @@ class LoanController extends BaseController
     protected $studentModel;
     protected $bookModel;
     protected $loanModel;
-    // make constructor to load model
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->studentModel = new StudentModel();
@@ -20,6 +20,8 @@ class LoanController extends BaseController
         $this->loanModel = new LoanModel();
     }
 
+    // Berfungsi untuk menampilkan halaman loan/index kemudian mengirimkan data students, books, dan loans
+    // Dan mengecek role user untuk menampilkan data loans sesuai dengan role user
     public function index()
     {
         $data_students = $this->studentModel->getRegistration();
@@ -38,6 +40,7 @@ class LoanController extends BaseController
         return view('loan/index', compact('data_students', 'data_books', 'data_loans'));
     }
 
+    // Berfungsi untuk menambahkan data peminjaman baru ke database
     public function add()
     {
         try {
@@ -69,7 +72,7 @@ class LoanController extends BaseController
         }
     }
 
-    // make function delete loan method post
+    // Berfungsi untuk mengubah data peminjaman ke database
     public function delete()
     {
         try {

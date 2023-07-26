@@ -12,12 +12,14 @@ class ReportController extends BaseController
     protected $loanModel;
     protected $bookModel;
 
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->loanModel = new LoanModel();
         $this->bookModel = new BookModel();
     }
     
+    // Berfungsi untuk menampilkan halaman dashboard
     public function index()
     {
         $year_now = date('Y');

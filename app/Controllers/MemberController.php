@@ -12,7 +12,8 @@ class MemberController extends BaseController
     protected $studentModel;
     protected $registrationModel;
     protected $loginModel;
-    // make constructor to load model
+
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->studentModel = new StudentModel();
@@ -20,6 +21,7 @@ class MemberController extends BaseController
         $this->loginModel = new LoginModel();
     }
 
+    // Berfungsi untuk menampilkan halaman dashboard
     public function index()
     {
         $data  = $this->studentModel->getRegistration();
@@ -27,7 +29,7 @@ class MemberController extends BaseController
         return view('admin/member/index', compact('data'));
     }
 
-    // make function to add method post
+    // Berfungsi untuk menambahkan data siswa baru ke database
     public function add()
     {
         try {
@@ -70,7 +72,7 @@ class MemberController extends BaseController
         }
     }
 
-    // make function to delete method post
+    // Berfungsi untuk menghapus data siswa dari database
     public function delete()
     {
         try {
@@ -84,7 +86,7 @@ class MemberController extends BaseController
         }
     }
 
-    // make function to update method post
+    // Berfungsi untuk memperbarui data siswa di database
     public function update()
     {
         try {

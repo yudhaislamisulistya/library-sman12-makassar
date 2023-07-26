@@ -7,20 +7,23 @@ use App\Models\BookModel;
 
 class BookController extends BaseController
 {
+
     protected $bookModel;
-    // make constructor to load model
+
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->bookModel = new BookModel();
     }
 
+    // Berfungsi untuk menampilkan halaman dashboard
     public function index()
     {
         $data = $this->bookModel->get()->getResult();
         return view('book/index', compact('data'));
     }
 
-    // make function to add method post
+    // Berfungsi untuk menambahkan buku baru ke database
     public function add()
     {
         try {
@@ -62,7 +65,7 @@ class BookController extends BaseController
         }
     }
 
-    // make function to update method post
+    // Berfungsi untuk mengubah data buku yang ada di database
     public function update()
     {
         try {
@@ -119,7 +122,7 @@ class BookController extends BaseController
         }
     }
 
-    // make function to delete method post
+    // Berfungsi untuk menghapus data buku yang ada di database
     public function delete()
     {
         try {
@@ -134,6 +137,7 @@ class BookController extends BaseController
         }
     }
 
+    // Berfungsu untuk menampilkan buku berdasarkan jenis buku
     public function type($jenis_buku)
     {
         $data = $this->bookModel->where('jenis_buku', $jenis_buku)->get()->getResult();

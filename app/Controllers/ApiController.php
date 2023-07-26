@@ -10,11 +10,15 @@ class ApiController extends BaseController
 {
     protected $studentModel;
     protected $bookModel;
+
+    // Berfungsi untuk memanggil model yang akan digunakan pada constructor (fungsi yang pertama kali dijalankan)
     public function __construct()
     {
         $this->studentModel = new StudentModel();
         $this->bookModel = new BookModel();
     }
+
+    // API untuk menampilkan data siswa berdasarkan id
     public function getStudentById($id)
     {
         $data_student = $this->studentModel->find($id);
@@ -34,6 +38,7 @@ class ApiController extends BaseController
         return $this->response->setJSON($data);
     }
 
+    // API untuk menampilkan data buku berdasarkan id
     public function getBookById($id)
     {
         $data_book = $this->bookModel->find($id);
